@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -99,8 +99,8 @@ if(!isset($_SESSION['teacherlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -173,8 +173,8 @@ if(!isset($_SESSION['teacherlogin']))
 			{
 			
 			        //start of getting current term
-			        $perry=mysql_query("select * from currentterm");
-			        $erry=mysql_fetch_array($perry);
+			        $perry=mysqli_query($con,"select * from currentterm");
+			        $erry=mysqli_fetch_array($perry);
 			        $term=$erry['term'];
 			        //end of getting term info
 			//exploding the string into an array
@@ -197,18 +197,18 @@ if(!isset($_SESSION['teacherlogin']))
 					if(($marks > -1))
 					{
 					//start of calculating student details
-					$cla=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-					$no=mysql_num_rows($cla);
+					$cla=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+					$no=mysqli_num_rows($cla);
 					if($no > 0)
 					{
-					$ss=mysql_fetch_array($cla);
+					$ss=mysqli_fetch_array($cla);
 					$class=$ss['currentclass'];
 					$name=$ss['firstname']." ".$ss['middlename']." ".$ss['lastname'];
 					//end of calculating student details
 					$percentage=($marks/$rawmarks) * 100;
 					//start of calculating grade
-					$gradi=mysql_query("select * from gradingsystem");
-					while($systim=mysql_fetch_array($gradi))
+					$gradi=mysqli_query($con,"select * from gradingsystem");
+					while($systim=mysqli_fetch_array($gradi))
 					{
 					     $rangee=$systim['rangee'];
 						 $grade=$systim['grade'];
@@ -220,30 +220,30 @@ if(!isset($_SESSION['teacherlogin']))
 						      $gradit=$grade;
 						 }
 					}
-					$squi=mysql_query("select * from gradingsystem where grade='$gradit' && subject='$subject'");
-					while($rel=mysql_fetch_array($squi))
+					$squi=mysqli_query($con,"select * from gradingsystem where grade='$gradit' && subject='$subject'");
+					while($rel=mysqli_fetch_array($squi))
 					{
 						$comments=$rel['comments'];
 					}
 					//end of calculating grade
 					$year=date("Y");
-					$info=mysql_query("select * from studentgrades where term='$term' && year='$year' && testname='$exam' && subject='$subject' && class='$class' && studentid='$studentid'");
-					$rows=mysql_num_rows($info);
+					$info=mysqli_query($con,"select * from studentgrades where term='$term' && year='$year' && testname='$exam' && subject='$subject' && class='$class' && studentid='$studentid'");
+					$rows=mysqli_num_rows($info);
 					if($rows < 1)
 					{
-					$arai=mysql_query("select * from exams where class='$class' && name='$exam'");
-					$araata=mysql_num_rows($arai);
+					$arai=mysqli_query($con,"select * from exams where class='$class' && name='$exam'");
+					$araata=mysqli_num_rows($arai);
 					if($araata>0)
 					{
 					//checking for students who have not selected classes
-					$myme=mysql_query("select * from subjectchoiceclass");
-					$memy=mysql_fetch_array($myme);
+					$myme=mysqli_query($con,"select * from subjectchoiceclass");
+					$memy=mysqli_fetch_array($myme);
 					$subjectchoiceclass=$memy['class'];
 					if($class >= $subjectchoiceclass)
 					{
 					     //code for senior classes subject check
-						 $wochei=mysql_query("select * from studentselectedsubjects where studentid='$studentid'");
-						 $wocheiata=mysql_num_rows($wochei);
+						 $wochei=mysqli_query($con,"select * from studentselectedsubjects where studentid='$studentid'");
+						 $wocheiata=mysqli_num_rows($wochei);
 						 if($wocheiata > 0)
 						 {
 						     $subjectselected="selected";
@@ -257,8 +257,8 @@ if(!isset($_SESSION['teacherlogin']))
 					elseif($class < $subjectchoiceclass)
 					{
 					     //code for junior classes subject check
-						 $wochei=mysql_query("select * from studentbasicsubject");
-						 $wocheiata=mysql_num_rows($wochei);
+						 $wochei=mysqli_query($con,"select * from studentbasicsubject");
+						 $wocheiata=mysqli_num_rows($wochei);
 						 if($wocheiata > 0)
 						 {
 						     $subjectselected="selected";
@@ -275,8 +275,8 @@ if(!isset($_SESSION['teacherlogin']))
 					//start of subject recognition software
 					if($class >= $subjectchoiceclass)
 					{
-					     $neismu=mysql_query("select * from studentselectedsubjects where studentid='$studentid'");
-						 $mus=mysql_fetch_array($neismu);
+					     $neismu=mysqli_query($con,"select * from studentselectedsubjects where studentid='$studentid'");
+						 $mus=mysqli_fetch_array($neismu);
 						 $subjex=$mus['subjects'];
 						 $allinarray=explode(",",$subjex);
 						 foreach($allinarray as $oneinarray)
@@ -294,7 +294,7 @@ if(!isset($_SESSION['teacherlogin']))
 					if(isset($ndip))
 					{
 					//start of insertion of grades into the software
-					$insert=mysql_query("insert into studentgrades (term,testname,marksgained,rawmarks,studentid,subject,year,percentagemarks,class,grade,remarks) values ('$term','$exam','$marks','$rawmarks','$studentid','$subject','$year','$percentage','$class','$gradit','$comments')");
+					$insert=mysqli_query($con,"insert into studentgrades (term,testname,marksgained,rawmarks,studentid,subject,year,percentagemarks,class,grade,remarks) values ('$term','$exam','$marks','$rawmarks','$studentid','$subject','$year','$percentage','$class','$gradit','$comments')");
 				    if($insert)
 				    {
 						echo"<font color='#0000FF'>grades for student $studentid has been successfully submitted</font><br/>";
@@ -313,7 +313,7 @@ if(!isset($_SESSION['teacherlogin']))
 					elseif($class < $subjectchoiceclass)
 					{
 					//start of insertion of grades into the software
-					$insert=mysql_query("insert into studentgrades (term,testname,marksgained,rawmarks,studentid,subject,year,percentagemarks,class,grade,remarks) values ('$term','$exam','$marks','$rawmarks','$studentid','$subject','$year','$percentage','$class','$gradit','$comments')");
+					$insert=mysqli_query($con,"insert into studentgrades (term,testname,marksgained,rawmarks,studentid,subject,year,percentagemarks,class,grade,remarks) values ('$term','$exam','$marks','$rawmarks','$studentid','$subject','$year','$percentage','$class','$gradit','$comments')");
 				    if($insert)
 				    {
 						echo"<font color='#0000FF'>grades for student $studentid has been successfully submitted</font><br/>";

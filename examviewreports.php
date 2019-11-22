@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -236,48 +236,48 @@ if(!isset($_SESSION['examsetup']))
 				     //getting current term
 					 echo"<fieldset>";
 					 echo"<legend>You are currently at: generate end term mean grade</legend>";
-					 $chwerry=mysql_query("select * from currentterm");
-					 $te=mysql_fetch_array($chwerry);
+					 $chwerry=mysqli_query($con,"select * from currentterm");
+					 $te=mysqli_fetch_array($chwerry);
 					 $term=$te['term'];
 					 
 					 $year=date("Y");
 					 //end of getting current term
-				     $allstudents=mysql_query("select * from studentdetails where status='1'");
-					 $number=mysql_num_rows($allstudents);
+				     $allstudents=mysqli_query($con,"select * from studentdetails where status='1'");
+					 $number=mysqli_num_rows($allstudents);
 					 if($number > 0)
 					 {
-					     while($eachstudent=mysql_fetch_array($allstudents))
+					     while($eachstudent=mysqli_fetch_array($allstudents))
 						 {
 						     $studentid=$eachstudent['admissionnumber'];
 							 $class=$eachstudent['currentclass'];
 							 $studentname=$eachstudent['firstname']." ".$eachstudent['middlename']." ".$eachstudent['lastname'];
-							 $subjectchoiceclass=mysql_query("select * from subjectchoiceclass");
-							 $cl=mysql_fetch_array($subjectchoiceclass);
+							 $subjectchoiceclass=mysqli_query($con,"select * from subjectchoiceclass");
+							 $cl=mysqli_fetch_array($subjectchoiceclass);
 							 $selectclass=$cl['class'];
 							 if($class >= $selectclass)
 							 {
 							     //update mean for senior students
-								 $querybasic=mysql_query("select * from studentselectedsubjects where studentid='$studentid'");
-								 $numbersubs=mysql_num_rows($querybasic);
+								 $querybasic=mysqli_query($con,"select * from studentselectedsubjects where studentid='$studentid'");
+								 $numbersubs=mysqli_num_rows($querybasic);
 								 if($numbersubs>0)
 								 {
-								 $bs=mysql_fetch_array($querybasic);
+								 $bs=mysqli_fetch_array($querybasic);
 								 $subjectsdone=$bs['subjects'];
 								 $subjectarray=explode(",",$subjectsdone);
 								 $numberofsubjects=count($subjectarray);
 								 
-								 $queryexam=mysql_query("select * from exams where class='$class'");
-								 $numberofexams=mysql_num_rows($queryexam);
+								 $queryexam=mysqli_query($con,"select * from exams where class='$class'");
+								 $numberofexams=mysqli_num_rows($queryexam);
 								 if($numberofexams != 0)
 								 {
 								 $totalsubjects=$numberofsubjects * $numberofexams;
 								 
-								 $studg=mysql_query("select * from studentgrades where studentid='$studentid' && class='$class' && year='$year' && term='$term'");
-								 $numberofrows=mysql_num_rows($studg);
+								 $studg=mysqli_query($con,"select * from studentgrades where studentid='$studentid' && class='$class' && year='$year' && term='$term'");
+								 $numberofrows=mysqli_num_rows($studg);
 								 if($numberofrows == $totalsubjects)
 								 {
 								     $totalmarks="";
-								     while($gra=mysql_fetch_array($studg))
+								     while($gra=mysqli_fetch_array($studg))
 									 {
 									     $percentagemarks=$gra['percentagemarks'];
 										 if($totalmarks=="")
@@ -291,11 +291,11 @@ if(!isset($_SESSION['examsetup']))
 									 }
 									 $meangrade=$totalmarks/$totalsubjects;
 									 //start of insert code
-									 $quickcheck=mysql_query("select * from individualmeangrade where year='$year' && term='$term' && studentid='$studentid' && class='$class'");
-									 $quicknum=mysql_num_rows($quickcheck);
+									 $quickcheck=mysqli_query($con,"select * from individualmeangrade where year='$year' && term='$term' && studentid='$studentid' && class='$class'");
+									 $quicknum=mysqli_num_rows($quickcheck);
 									 if($quicknum == 0)
 									 {
-									 $insert=mysql_query("insert into individualmeangrade (studentid,meangrade,term,class,year,subjectsdone,examsdone,totalmarks) values ('$studentid','$meangrade','$term','$class','$year','$totalsubjects','$numberofexams','$totalmarks')");
+									 $insert=mysqli_query($con,"insert into individualmeangrade (studentid,meangrade,term,class,year,subjectsdone,examsdone,totalmarks) values ('$studentid','$meangrade','$term','$class','$year','$totalsubjects','$numberofexams','$totalmarks')");
 									 if($insert)
 									 {
 									     echo"<font color='green'>student ".$studentname." with id ".$studentid." who is in form".$class." mean grade has been posted successfully.</font><br/>";
@@ -333,24 +333,24 @@ if(!isset($_SESSION['examsetup']))
 							 else
 							 {
 							     //update mean for mono students
-								 $querybasic=mysql_query("select * from studentbasicsubject");
-								 $bs=mysql_fetch_array($querybasic);
+								 $querybasic=mysqli_query($con,"select * from studentbasicsubject");
+								 $bs=mysqli_fetch_array($querybasic);
 								 $subjectsdone=$bs['subjects'];
 								 $subjectarray=explode(",",$subjectsdone);
 								 $numberofsubjects=count($subjectarray);
 								 
-								 $queryexam=mysql_query("select * from exams where class='$class'");
-								 $numberofexams=mysql_num_rows($queryexam);
+								 $queryexam=mysqli_query($con,"select * from exams where class='$class'");
+								 $numberofexams=mysqli_num_rows($queryexam);
 								 if($numberofexams != 0)
 								 {
 								 $totalsubjects=$numberofsubjects * $numberofexams;
 								 
-								 $studg=mysql_query("select * from studentgrades where studentid='$studentid' && class='$class' && year='$year' && term='$term'");
-								 $numberofrows=mysql_num_rows($studg);
+								 $studg=mysqli_query($con,"select * from studentgrades where studentid='$studentid' && class='$class' && year='$year' && term='$term'");
+								 $numberofrows=mysqli_num_rows($studg);
 								 if($numberofrows == $totalsubjects)
 								 {
 								     $totalmarks="";
-								     while($gra=mysql_fetch_array($studg))
+								     while($gra=mysqli_fetch_array($studg))
 									 {
 									     $percentagemarks=$gra['percentagemarks'];
 										 if($totalmarks=="")
@@ -364,11 +364,11 @@ if(!isset($_SESSION['examsetup']))
 									 }
 									 $meangrade=$totalmarks/$totalsubjects;
 									 //start of insert code
-									 $quickcheck=mysql_query("select * from individualmeangrade where year='$year' && term='$term' && studentid='$studentid' && class='$class'");
-									 $quicknum=mysql_num_rows($quickcheck);
+									 $quickcheck=mysqli_query($con,"select * from individualmeangrade where year='$year' && term='$term' && studentid='$studentid' && class='$class'");
+									 $quicknum=mysqli_num_rows($quickcheck);
 									 if($quicknum == 0)
 									 {
-									 $insert=mysql_query("insert into individualmeangrade (studentid,meangrade,term,class,year,subjectsdone,examsdone,totalmarks) values ('$studentid','$meangrade','$term','$class','$year','$totalsubjects','$numberofexams','$totalmarks')");
+									 $insert=mysqli_query($con,"insert into individualmeangrade (studentid,meangrade,term,class,year,subjectsdone,examsdone,totalmarks) values ('$studentid','$meangrade','$term','$class','$year','$totalsubjects','$numberofexams','$totalmarks')");
 									 if($insert)
 									 {
 									     echo"<font color='green'>student ".$studentname." with id  ".$studentid." who is in form".$class." mean grade has been posted successfully.</font><br/>";
@@ -452,9 +452,9 @@ if(!isset($_SESSION['examsetup']))
 					 echo"<fieldset>";
 					 echo"<legend>You are currently at: generate exam specific mean grade</legend>";
 					 echo"<form action='generateexamspecificmeangrade' method='post'>";
-					 $yaiyai=mysql_query("select * from  exams");
+					 $yaiyai=mysqli_query($con,"select * from  exams");
 					 echo"select an exam: <select name='exam'>";
-					 while($achaginye=mysql_fetch_array($yaiyai))
+					 while($achaginye=mysqli_fetch_array($yaiyai))
 					 {
 					     echo"<option>".$achaginye['name']."</option>";
 					 }
@@ -500,9 +500,9 @@ if(!isset($_SESSION['examsetup']))
 					 <option>three</option>
 					 </select>';
 					 
-					 $yaiyai=mysql_query("select * from  exams");
+					 $yaiyai=mysqli_query($con,"select * from  exams");
 					 echo"select an exam: <select name='exam'>";
-					 while($achaginye=mysql_fetch_array($yaiyai))
+					 while($achaginye=mysqli_fetch_array($yaiyai))
 					 {
 					     echo"<option>".$achaginye['name']."</option>";
 					 }

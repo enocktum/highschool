@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ERROR);
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -56,8 +56,8 @@ echo "STUDENTS $subject RESULTS FOR FORM $class";
 if($year && $exam && $term && $class && $subject)
 {
 	//echo $year." ".$exam." ".$term." ".$class." ".$subject;
-	$perry=mysql_query("select * from studentgrades where year='$year' && term='$term' && class='$class' && subject='$subject' && testname='$exam' order by percentagemarks DESC");
-	$number=mysql_num_rows($perry);
+	$perry=mysqli_query($con,"select * from studentgrades where year='$year' && term='$term' && class='$class' && subject='$subject' && testname='$exam' order by percentagemarks DESC");
+	$number=mysqli_num_rows($perry);
 	if($number > 0)
 	{
 		echo
@@ -76,13 +76,13 @@ if($year && $exam && $term && $class && $subject)
 		';
 		$position=1;
 		$totalmarks=0;
-		while($yerry=mysql_fetch_array($perry))
+		while($yerry=mysqli_fetch_array($perry))
 		{
 			$percenta=$yerry['percentagemarks'];
 			$studid=$yerry['studentid'];
 			//checking for student name
-			$summer=mysql_query("select * from studentdetails where admissionnumber='$studid'");
-			$mix=mysql_fetch_array($summer);
+			$summer=mysqli_query($con,"select * from studentdetails where admissionnumber='$studid'");
+			$mix=mysqli_fetch_array($summer);
 			$studentname=$mix['firstname']." ".$mix['middlename']." ".$mix['lastname'];
 			//end of checking for student name
 			echo

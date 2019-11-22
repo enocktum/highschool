@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -108,8 +108,8 @@ if(!isset($_SESSION['studentregistrationlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -271,22 +271,22 @@ if(!isset($_SESSION['studentregistrationlogin']))
 						 //end of adding basic subjects
 						 
 						 //adding of data to database
-						 $checksu=mysql_query("select * from studentdetails where admissionnumber='$studentid' && status='1'");
-						 $numb=mysql_num_rows($checksu);
+						 $checksu=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid' && status='1'");
+						 $numb=mysqli_num_rows($checksu);
 						 if($numb>0)
 						 {  
-						     $studails=mysql_fetch_array($checksu);
+						     $studails=mysqli_fetch_array($checksu);
 							 $currentclass=$studails['currentclass'];
-						     $che=mysql_query("select * from studentselectedsubjects where studentid='$studentid'");
-							 $ata=mysql_num_rows($che);
+						     $che=mysqli_query($con,"select * from studentselectedsubjects where studentid='$studentid'");
+							 $ata=mysqli_num_rows($che);
 							 if($ata == 0)
 							 {
-							     $checkk=mysql_query("select * from subjectchoiceclass");
-								 $k=mysql_fetch_array($checkk);
+							     $checkk=mysqli_query($con,"select * from subjectchoiceclass");
+								 $k=mysqli_fetch_array($checkk);
 								 $subjectsclass=$k['class'];
 								 if($currentclass >= $subjectsclass)
 								 {
-								     $insert=mysql_query("insert into studentselectedsubjects (studentid,subjects) values('$studentid','$stringall')");
+								     $insert=mysqli_query($con,"insert into studentselectedsubjects (studentid,subjects) values('$studentid','$stringall')");
 									 if($insert)
 									 {
 									     header("location:viewstudent");

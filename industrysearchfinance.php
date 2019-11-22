@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -193,14 +193,14 @@ xmlhttp.send();
 				$studentid=$_POST['admissionnumber'];
 				if($studentid)
 				{
-				$perry=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$erry=mysql_fetch_array($perry);
+				$perry=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$erry=mysqli_fetch_array($perry);
 				$name=$erry['firstname']." ".$erry['middlename']." ".$erry['lastname'];
 				echo"<h1 style='text-transform:uppercase;'><u><b>statements FOR $name</b></u></h1>";
 			    //start of displaying current charges
 				echo"<h3 style='text-transform:uppercase;'>CURRENT CHARGES</h3>";
-				$yerry=mysql_query("select * from currentcharges where studentid='$studentid'");
-				$no=mysql_num_rows($yerry);
+				$yerry=mysqli_query($con,"select * from currentcharges where studentid='$studentid'");
+				$no=mysqli_num_rows($yerry);
 				if($no > 0)
 				{
 				echo"<table border='0' style='width:70em;text-align:left;'>";
@@ -212,12 +212,12 @@ xmlhttp.send();
 				echo"<th><b>DATE</b></u></th>";
 				echo"<th><b>BOARDING_STATUS</b></u></th>";
 				echo"</tr>";
-				while($pata=mysql_fetch_array($yerry))
+				while($pata=mysqli_fetch_array($yerry))
 				{
 				echo"<tr>";
 				$studentid=$pata['studentid'];
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$course=$nam['course'];
 				$boarding=$nam['boardingstatus'];
 				$name=$nam['firstname']." ".$nam['middlename']." ".$nam['lastname'];
@@ -247,8 +247,8 @@ xmlhttp.send();
 				echo"_________________________________________________________________________________________________________________________________________<br/><br/>";
 				
 				echo"<h3 style='text-transform:uppercase;'>Financial statement</h3><br/>";
-				$query=mysql_query("select * from financestatement where studentid='$studentid' ORDER BY financestatementid");
-				$number=mysql_num_rows($query);
+				$query=mysqli_query($con,"select * from financestatement where studentid='$studentid' ORDER BY financestatementid");
+				$number=mysqli_num_rows($query);
 				if($number > 0)
 				{
 				echo"<table border='0' style='width:70em;text-align:left;'>";
@@ -259,7 +259,7 @@ xmlhttp.send();
 				echo"<th><b><font color='red'>FEES_STATUS</font></b></th>";
 				echo"<th><b>TERM</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				echo"<tr>";
 				echo"<td>".$data['datedeposited']."</td>";

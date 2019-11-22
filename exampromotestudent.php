@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -210,7 +210,7 @@ if(!isset($_SESSION['examsetup']))
 				 {
 				     echo"<fieldset>";
 				     echo"<legend>CLASS PROMOTION OF STUDENTS</legend>";
-					 $allof=mysql_query("select * from studentdetails where currentclass='$choice' && status='1'");
+					 $allof=mysqli_query($con,"select * from studentdetails where currentclass='$choice' && status='1'");
 					 echo'<form action="exampromotestudentconfirm" method="post">';
 					 echo'<table border="1" style="width:100%;text-align:left;">';
 					 echo'
@@ -223,9 +223,9 @@ if(!isset($_SESSION['examsetup']))
 					 </tr>
 					 ';
 					 $counter=0;
-					 $ngapi=mysql_num_rows($allof);
+					 $ngapi=mysqli_num_rows($allof);
 					 $yote=array();
-					 while($em=mysql_fetch_array($allof))
+					 while($em=mysqli_fetch_array($allof))
 					 {
 					     
 						 $yote[$counter]=$counter."admissionnumber";

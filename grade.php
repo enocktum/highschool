@@ -2,8 +2,8 @@
 error_reporting(E_ERROR);
 // start of database query
 include('connection.php');
-$query=mysql_query("select * from studentdetails where status='1'");
-while($b=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from studentdetails where status='1'");
+while($b=mysqli_fetch_array($query))
 {
 	$a[]=$b['admissionnumber'];
 	}

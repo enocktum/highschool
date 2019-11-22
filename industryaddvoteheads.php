@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -192,8 +192,8 @@ xmlhttp.send();
             <?php
 			include("connection.php");
 			//start term info
-			//$zerry=mysql_query("select * from currentterm");
-			//$way=mysql_fetch_array($zerry);
+			//$zerry=mysqli_query($con,"select * from currentterm");
+			//$way=mysqli_fetch_array($zerry);
 			//$term=$way['term'];
 			$term=$_POST['term'];
 			if($term)
@@ -205,8 +205,8 @@ xmlhttp.send();
 					$boardingstatus=$_POST['boardingstatus'];
 					if(isset($voteheadname) && isset($voteheadamount))
 					{
-						$vote=mysql_query("select * from voteheads where name='$voteheadname' && termit='$term' && boardingstatus='$boardingstatus'");
-						$num=mysql_num_rows($vote);
+						$vote=mysqli_query($con,"select * from voteheads where name='$voteheadname' && termit='$term' && boardingstatus='$boardingstatus'");
+						$num=mysqli_num_rows($vote);
 						if($num > 0)
 						{
 							echo"<font color='#FF0000'>there is a votehead with the same name in the system</font><br/><a href='industrymanagefees'>Try Again</a>";
@@ -214,12 +214,12 @@ xmlhttp.send();
 						else
 						{
 							
-						$insert=mysql_query("insert into voteheads (name,amount,termit,boardingstatus) values ('$voteheadname','$voteheadamount','$term','$boardingstatus')");
+						$insert=mysqli_query($con,"insert into voteheads (name,amount,termit,boardingstatus) values ('$voteheadname','$voteheadamount','$term','$boardingstatus')");
 						if($insert)
 						{
-							$ingi=mysql_query("select * from voteheads where termit='$term' && boardingstatus='$boardingstatus'");
+							$ingi=mysqli_query($con,"select * from voteheads where termit='$term' && boardingstatus='$boardingstatus'");
 							$sum=0;
-							while($za=mysql_fetch_array($ingi))
+							while($za=mysqli_fetch_array($ingi))
 							{
 								if($sum==0)
 								{
@@ -231,7 +231,7 @@ xmlhttp.send();
 								}
 							}
 							$totalamount=$sum;
-							$update=mysql_query("update schoolinfo set feesamount='$totalamount' where termit='$term' && boardingstatus='$boardingstatus'");
+							$update=mysqli_query($con,"update schoolinfo set feesamount='$totalamount' where termit='$term' && boardingstatus='$boardingstatus'");
 							if($update)
 							{
 								echo"<font color='#009933'>fees updated and </font>";

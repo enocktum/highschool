@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -37,8 +37,8 @@ if(!isset($_SESSION['industrylogin']))
 				  {
 					  echo"<h3 style='text-transform:uppercase;'><a style='text-transform:uppercase;color:black;' href='industryfinancialstatement'>$schoolname</a><br/>CLEARED STUDENTS AS AT <u>".date("d-m-Y")."</u> for all forms</h3>";
 					  echo"<hr/>";
-					  $query=mysql_query("select * from currentcharges where status='1' && balance<'1' ORDER BY studentid");
-				$no=mysql_num_rows($query);
+					  $query=mysqli_query($con,"select * from currentcharges where status='1' && balance<'1' ORDER BY studentid");
+				$no=mysqli_num_rows($query);
 				if($no > 0)
 				{
 				echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -50,15 +50,15 @@ if(!isset($_SESSION['industrylogin']))
 				echo"<th><b>CLASS</b></u></th>";
 				echo"<th><b>STREAM</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				$balance=$data['balance'];
 				if($balance<1)
 				{
 				echo"<tr>";
 				$studentid=$data['studentid'];
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$name=$nam['firstname']." ".$nam['middlename']." ".$nam['lastname'];
 				echo"<td style='text-transform:uppercase;'>".$name."</td>";
 				echo"<td>".$data['studentid']."</td>";
@@ -83,8 +83,8 @@ if(!isset($_SESSION['industrylogin']))
 					//code for specific classes
 					echo"<h3 style='text-transform:uppercase;'><a style='text-transform:uppercase;color:black;' href='industryfinancialstatement'>$schoolname</a><br/>CLEARED STUDENTS AS AT <u>".date("d-m-Y")."</u> for form $cclass</h3>";
 					echo"<hr/>";
-					$terry=mysql_query("select * from currentcharges where status='1' && balance<'1'");
-					$no=mysql_num_rows($terry);
+					$terry=mysqli_query($con,"select * from currentcharges where status='1' && balance<'1'");
+					$no=mysqli_num_rows($terry);
 					if($no>0)
 					{
 						echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -96,11 +96,11 @@ if(!isset($_SESSION['industrylogin']))
 						echo"<th><b>CLASS</b></u></th>";
 						echo"<th><b>STREAM</b></u></th>";
 						echo"</tr>";
-						while($rabbit=mysql_fetch_array($terry))
+						while($rabbit=mysqli_fetch_array($terry))
 						{
 							$studentid=$rabbit['studentid'];
-							$studentquery=mysql_query("select * from studentdetails where status='1' && currentclass='$cclass' && admissionnumber='$studentid'");
-							$ata=mysql_num_rows($studentquery);
+							$studentquery=mysqli_query($con,"select * from studentdetails where status='1' && currentclass='$cclass' && admissionnumber='$studentid'");
+							$ata=mysqli_num_rows($studentquery);
 							if($ata <= 0)
 							{
 								//do nothing
@@ -110,12 +110,12 @@ if(!isset($_SESSION['industrylogin']))
 							else if($ata >= 1)
 							{
 								//do something code
-								$studentdata=mysql_fetch_array($studentquery);
+								$studentdata=mysqli_fetch_array($studentquery);
 								$name=$studentdata['firstname']." ".$studentdata['middlename']." ".$studentdata['lastname'];
 								$admissionnumber=$studentdata['admissionnumber'];
 								$stream=$studentdata['stream'];
-								$chargesquery=mysql_query("select * from currentcharges where studentid='$admissionnumber' && status='1'");
-								$chargesdata=mysql_fetch_array($chargesquery);
+								$chargesquery=mysqli_query($con,"select * from currentcharges where studentid='$admissionnumber' && status='1'");
+								$chargesdata=mysqli_fetch_array($chargesquery);
 								$balance=$chargesdata['balance'];
 								$term=$chargesdata['term'];
 								$balancehuman=$balance * -1;
@@ -148,8 +148,8 @@ if(!isset($_SESSION['industrylogin']))
 				  {
 					  echo"<h3 style='text-transform:uppercase;'><a style='text-transform:uppercase;color:black;' href='industryfinancialstatement'>$schoolname</a><br/>UNCLEARED STUDENTS AS AT <u>".date("d-m-Y")."</u> for all forms</h3>";
 					  echo"<hr/>";
-					  $query=mysql_query("select * from currentcharges where status='1' && balance>'0' ORDER BY studentid");
-				$no=mysql_num_rows($query);
+					  $query=mysqli_query($con,"select * from currentcharges where status='1' && balance>'0' ORDER BY studentid");
+				$no=mysqli_num_rows($query);
 				if($no > 0)
 				{
 				echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -161,15 +161,15 @@ if(!isset($_SESSION['industrylogin']))
 				echo"<th><b>CLASS</b></u></th>";
 				echo"<th><b>STREAM</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				$balance=$data['balance'];
 				if($balance>0)
 				{
 				echo"<tr>";
 				$studentid=$data['studentid'];
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$name=$nam['firstname']." ".$nam['middlename']." ".$nam['lastname'];
 				echo"<td style='text-transform:uppercase;'>".$name."</td>";
 				echo"<td>".$data['studentid']."</td>";
@@ -193,8 +193,8 @@ if(!isset($_SESSION['industrylogin']))
 					//code for specific classes
 					echo"<h3 style='text-transform:uppercase;'><a style='text-transform:uppercase;color:black;' href='industryfinancialstatement'>$schoolname</a><br/>UNCLEARED STUDENTS AS AT <u>".date("d-m-Y")."</u> for form $cclass</h3>";
 					echo"<hr/>";
-					$terry=mysql_query("select * from currentcharges where status='1' && balance>'0'");
-					$no=mysql_num_rows($terry);
+					$terry=mysqli_query($con,"select * from currentcharges where status='1' && balance>'0'");
+					$no=mysqli_num_rows($terry);
 					if($no>0)
 					{
 						echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -206,11 +206,11 @@ if(!isset($_SESSION['industrylogin']))
 						echo"<th><b>CLASS</b></u></th>";
 						echo"<th><b>STREAM</b></u></th>";
 						echo"</tr>";
-						while($rabbit=mysql_fetch_array($terry))
+						while($rabbit=mysqli_fetch_array($terry))
 						{
 							$studentid=$rabbit['studentid'];
-							$studentquery=mysql_query("select * from studentdetails where status='1' && currentclass='$cclass' && admissionnumber='$studentid'");
-							$ata=mysql_num_rows($studentquery);
+							$studentquery=mysqli_query($con,"select * from studentdetails where status='1' && currentclass='$cclass' && admissionnumber='$studentid'");
+							$ata=mysqli_num_rows($studentquery);
 							if($ata <= 0)
 							{
 								//do nothing
@@ -220,12 +220,12 @@ if(!isset($_SESSION['industrylogin']))
 							else if($ata >= 1)
 							{
 								//do something code
-								$studentdata=mysql_fetch_array($studentquery);
+								$studentdata=mysqli_fetch_array($studentquery);
 								$name=$studentdata['firstname']." ".$studentdata['middlename']." ".$studentdata['lastname'];
 								$admissionnumber=$studentdata['admissionnumber'];
 								$stream=$studentdata['stream'];
-								$chargesquery=mysql_query("select * from currentcharges where studentid='$admissionnumber' && status='1'");
-								$chargesdata=mysql_fetch_array($chargesquery);
+								$chargesquery=mysqli_query($con,"select * from currentcharges where studentid='$admissionnumber' && status='1'");
+								$chargesdata=mysqli_fetch_array($chargesquery);
 								$balancehuman=$chargesdata['balance'];
 								$term=$chargesdata['term'];
 								echo"
@@ -257,8 +257,8 @@ if(!isset($_SESSION['industrylogin']))
 				  {
 					  echo"<h3 style='text-transform:uppercase;'><a style='text-transform:uppercase;color:black;' href='industryfinancialstatement'>$schoolname</a><br/>ALL STUDENTS AS AT <u>".date("d-m-Y")."</u> for all forms</h3>";
 					  echo"<hr/>";
-					  $query=mysql_query("select * from currentcharges where status='1' ORDER BY studentid");
-				$no=mysql_num_rows($query);
+					  $query=mysqli_query($con,"select * from currentcharges where status='1' ORDER BY studentid");
+				$no=mysqli_num_rows($query);
 				if($no > 0)
 				{
 				echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -270,7 +270,7 @@ if(!isset($_SESSION['industrylogin']))
 				echo"<th><b>CLASS</b></u></th>";
 				echo"<th><b>STREAM</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				echo"<tr>";
 				$studentid=$data['studentid'];
@@ -288,8 +288,8 @@ if(!isset($_SESSION['industrylogin']))
 				{
 					$balue=$balance;
 				}
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$name=$nam['firstname']." ".$nam['middlename']." ".$nam['lastname'];
 				echo"<td style='text-transform:uppercase;'>".$name."</td>";
 				echo"<td>".$data['studentid']."</td>";
@@ -311,8 +311,8 @@ if(!isset($_SESSION['industrylogin']))
 					//code for specific classes
 					echo"<h3 style='text-transform:uppercase;'><a style='text-transform:uppercase;color:black;' href='industryfinancialstatement'>$schoolname</a><br/>ALL STUDENTS AS AT <u>".date("d-m-Y")."</u> for form $cclass</h3>";
 					echo"<hr/>";
-					$terry=mysql_query("select * from currentcharges where status='1'");
-					$no=mysql_num_rows($terry);
+					$terry=mysqli_query($con,"select * from currentcharges where status='1'");
+					$no=mysqli_num_rows($terry);
 					if($no>0)
 					{
 						echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -324,11 +324,11 @@ if(!isset($_SESSION['industrylogin']))
 						echo"<th><b>CLASS</b></u></th>";
 						echo"<th><b>STREAM</b></u></th>";
 						echo"</tr>";
-						while($rabbit=mysql_fetch_array($terry))
+						while($rabbit=mysqli_fetch_array($terry))
 						{
 							$studentid=$rabbit['studentid'];
-							$studentquery=mysql_query("select * from studentdetails where status='1' && currentclass='$cclass' && admissionnumber='$studentid'");
-							$ata=mysql_num_rows($studentquery);
+							$studentquery=mysqli_query($con,"select * from studentdetails where status='1' && currentclass='$cclass' && admissionnumber='$studentid'");
+							$ata=mysqli_num_rows($studentquery);
 							if($ata <= 0)
 							{
 								//do nothing
@@ -338,12 +338,12 @@ if(!isset($_SESSION['industrylogin']))
 							else if($ata >= 1)
 							{
 								//do something code
-								$studentdata=mysql_fetch_array($studentquery);
+								$studentdata=mysqli_fetch_array($studentquery);
 								$name=$studentdata['firstname']." ".$studentdata['middlename']." ".$studentdata['lastname'];
 								$admissionnumber=$studentdata['admissionnumber'];
 								$stream=$studentdata['stream'];
-								$chargesquery=mysql_query("select * from currentcharges where studentid='$admissionnumber' && status='1'");
-								$chargesdata=mysql_fetch_array($chargesquery);
+								$chargesquery=mysqli_query($con,"select * from currentcharges where studentid='$admissionnumber' && status='1'");
+								$chargesdata=mysqli_fetch_array($chargesquery);
 								$balance=$chargesdata['balance'];
 								if($balance==0)
 								{

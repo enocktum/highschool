@@ -1,23 +1,25 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
--- http://www.phpmyadmin.net
+-- version 4.9.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 12, 2014 at 04:40 PM
--- Server version: 5.5.16
--- PHP Version: 5.3.8
+-- Host: 127.0.0.1
+-- Generation Time: Nov 22, 2019 at 10:53 AM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.1.33
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `highexam`
+-- Database: `highschool`
 --
 
 -- --------------------------------------------------------
@@ -26,17 +28,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `admissionlogfile`
 --
 
-CREATE TABLE IF NOT EXISTS `admissionlogfile` (
-  `admissionlogfileid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admissionlogfile` (
+  `admissionlogfileid` int(11) NOT NULL,
   `username` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `password` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `day` date NOT NULL,
   `time` varchar(25) NOT NULL,
   `loginsuccessful` varchar(4) NOT NULL,
   `ipaddress` varchar(50) NOT NULL,
-  `who` varchar(50) NOT NULL,
-  PRIMARY KEY (`admissionlogfileid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+  `who` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admissionlogfile`
@@ -79,12 +80,11 @@ INSERT INTO `admissionlogfile` (`admissionlogfileid`, `username`, `password`, `d
 -- Table structure for table `admissionlogin`
 --
 
-CREATE TABLE IF NOT EXISTS `admissionlogin` (
-  `admissionloginid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admissionlogin` (
+  `admissionloginid` int(11) NOT NULL,
   `username` varchar(150) NOT NULL,
-  `password` varchar(150) NOT NULL,
-  PRIMARY KEY (`admissionloginid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `password` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admissionlogin`
@@ -99,12 +99,11 @@ INSERT INTO `admissionlogin` (`admissionloginid`, `username`, `password`) VALUES
 -- Table structure for table `boardadmissionlogin`
 --
 
-CREATE TABLE IF NOT EXISTS `boardadmissionlogin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `boardadmissionlogin` (
+  `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `boardadmissionlogin`
@@ -119,8 +118,8 @@ INSERT INTO `boardadmissionlogin` (`id`, `username`, `password`) VALUES
 -- Table structure for table `boarddetails`
 --
 
-CREATE TABLE IF NOT EXISTS `boarddetails` (
-  `boarddetailsid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `boarddetails` (
+  `boarddetailsid` int(11) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `gender` varchar(50) NOT NULL,
@@ -131,9 +130,8 @@ CREATE TABLE IF NOT EXISTS `boarddetails` (
   `birthday` date NOT NULL,
   `nationality` varchar(50) NOT NULL,
   `admissiondate` date NOT NULL,
-  `province` varchar(50) NOT NULL,
-  PRIMARY KEY (`boarddetailsid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `province` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `boarddetails`
@@ -148,13 +146,12 @@ INSERT INTO `boarddetails` (`boarddetailsid`, `firstname`, `lastname`, `gender`,
 -- Table structure for table `currentterm`
 --
 
-CREATE TABLE IF NOT EXISTS `currentterm` (
-  `currenttermid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `currentterm` (
+  `currenttermid` int(11) NOT NULL,
   `term` varchar(15) NOT NULL,
   `openingdate` date NOT NULL,
-  `closingdate` date NOT NULL,
-  PRIMARY KEY (`currenttermid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `closingdate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `currentterm`
@@ -169,12 +166,11 @@ INSERT INTO `currentterm` (`currenttermid`, `term`, `openingdate`, `closingdate`
 -- Table structure for table `exams`
 --
 
-CREATE TABLE IF NOT EXISTS `exams` (
-  `examsid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `exams` (
+  `examsid` int(11) NOT NULL,
   `name` varchar(60) NOT NULL,
-  `class` varchar(5) NOT NULL,
-  PRIMARY KEY (`examsid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `class` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `exams`
@@ -190,8 +186,8 @@ INSERT INTO `exams` (`examsid`, `name`, `class`) VALUES
 -- Table structure for table `examspecificmeangrade`
 --
 
-CREATE TABLE IF NOT EXISTS `examspecificmeangrade` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `examspecificmeangrade` (
+  `id` int(11) NOT NULL,
   `studentid` varchar(100) NOT NULL,
   `year` varchar(4) NOT NULL,
   `exam` varchar(100) NOT NULL,
@@ -199,9 +195,8 @@ CREATE TABLE IF NOT EXISTS `examspecificmeangrade` (
   `class` varchar(10) NOT NULL,
   `meangrade` float NOT NULL,
   `totalmarks` float NOT NULL,
-  `subjectsdone` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `subjectsdone` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `examspecificmeangrade`
@@ -216,7 +211,8 @@ INSERT INTO `examspecificmeangrade` (`id`, `studentid`, `year`, `exam`, `term`, 
 -- Table structure for table `footer`
 --
 
-CREATE TABLE IF NOT EXISTS `footer` (
+CREATE TABLE `footer` (
+  `id` int(11) NOT NULL,
   `schoolname` varchar(150) NOT NULL,
   `copyright` varchar(4) NOT NULL,
   `maintained` varchar(100) NOT NULL
@@ -226,8 +222,8 @@ CREATE TABLE IF NOT EXISTS `footer` (
 -- Dumping data for table `footer`
 --
 
-INSERT INTO `footer` (`schoolname`, `copyright`, `maintained`) VALUES
-('ENOSOFT COMPANY HIGHSCHOOL SOFTWARE SOLUTION', '2014', 'Enock Tum');
+INSERT INTO `footer` (`id`, `schoolname`, `copyright`, `maintained`) VALUES
+(1, 'enosoft highschool', '2015', 'Enock Tum');
 
 -- --------------------------------------------------------
 
@@ -235,14 +231,13 @@ INSERT INTO `footer` (`schoolname`, `copyright`, `maintained`) VALUES
 -- Table structure for table `gradingsystem`
 --
 
-CREATE TABLE IF NOT EXISTS `gradingsystem` (
-  `gradingsystemid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gradingsystem` (
+  `gradingsystemid` int(11) NOT NULL,
   `grade` varchar(25) NOT NULL,
   `rangee` varchar(50) NOT NULL,
   `comments` varchar(250) NOT NULL,
-  `subject` varchar(100) NOT NULL,
-  PRIMARY KEY (`gradingsystemid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133 ;
+  `subject` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gradingsystem`
@@ -388,8 +383,8 @@ INSERT INTO `gradingsystem` (`gradingsystemid`, `grade`, `rangee`, `comments`, `
 -- Table structure for table `individualmeangrade`
 --
 
-CREATE TABLE IF NOT EXISTS `individualmeangrade` (
-  `individualmeangradeid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `individualmeangrade` (
+  `individualmeangradeid` int(11) NOT NULL,
   `studentid` varchar(25) NOT NULL,
   `meangrade` float NOT NULL,
   `term` varchar(25) NOT NULL,
@@ -397,9 +392,8 @@ CREATE TABLE IF NOT EXISTS `individualmeangrade` (
   `year` varchar(25) NOT NULL,
   `subjectsdone` varchar(25) NOT NULL,
   `examsdone` varchar(25) NOT NULL,
-  `totalmarks` double NOT NULL,
-  PRIMARY KEY (`individualmeangradeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+  `totalmarks` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `individualmeangrade`
@@ -417,14 +411,13 @@ INSERT INTO `individualmeangrade` (`individualmeangradeid`, `studentid`, `meangr
 -- Table structure for table `meangradegrading`
 --
 
-CREATE TABLE IF NOT EXISTS `meangradegrading` (
-  `meangradegradingid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `meangradegrading` (
+  `meangradegradingid` int(11) NOT NULL,
   `between` varchar(25) NOT NULL,
   `grade` varchar(10) NOT NULL,
   `classteacherremarks` varchar(200) NOT NULL,
-  `principleremarks` varchar(200) NOT NULL,
-  PRIMARY KEY (`meangradegradingid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+  `principleremarks` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `meangradegrading`
@@ -450,11 +443,10 @@ INSERT INTO `meangradegrading` (`meangradegradingid`, `between`, `grade`, `class
 -- Table structure for table `streams`
 --
 
-CREATE TABLE IF NOT EXISTS `streams` (
-  `streamsid` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(25) NOT NULL,
-  PRIMARY KEY (`streamsid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+CREATE TABLE `streams` (
+  `streamsid` int(11) NOT NULL,
+  `name` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `streams`
@@ -469,12 +461,11 @@ INSERT INTO `streams` (`streamsid`, `name`) VALUES
 -- Table structure for table `studentadmissionlogin`
 --
 
-CREATE TABLE IF NOT EXISTS `studentadmissionlogin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `studentadmissionlogin` (
+  `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `studentadmissionlogin`
@@ -489,11 +480,10 @@ INSERT INTO `studentadmissionlogin` (`id`, `username`, `password`) VALUES
 -- Table structure for table `studentbasicsubject`
 --
 
-CREATE TABLE IF NOT EXISTS `studentbasicsubject` (
-  `studentbasicsubjectid` int(11) NOT NULL AUTO_INCREMENT,
-  `subjects` varchar(500) NOT NULL,
-  PRIMARY KEY (`studentbasicsubjectid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+CREATE TABLE `studentbasicsubject` (
+  `studentbasicsubjectid` int(11) NOT NULL,
+  `subjects` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `studentbasicsubject`
@@ -508,8 +498,8 @@ INSERT INTO `studentbasicsubject` (`studentbasicsubjectid`, `subjects`) VALUES
 -- Table structure for table `studentdetails`
 --
 
-CREATE TABLE IF NOT EXISTS `studentdetails` (
-  `studentdetailsid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `studentdetails` (
+  `studentdetailsid` int(11) NOT NULL,
   `firstname` varchar(45) NOT NULL,
   `middlename` varchar(45) NOT NULL,
   `lastname` varchar(45) NOT NULL,
@@ -531,9 +521,8 @@ CREATE TABLE IF NOT EXISTS `studentdetails` (
   `dormitory` varchar(100) NOT NULL,
   `currentclass` varchar(25) NOT NULL COMMENT 'student current class',
   `status` varchar(3) NOT NULL,
-  `boardingstatus` varchar(50) NOT NULL,
-  PRIMARY KEY (`studentdetailsid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `boardingstatus` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `studentdetails`
@@ -549,8 +538,8 @@ INSERT INTO `studentdetails` (`studentdetailsid`, `firstname`, `middlename`, `la
 -- Table structure for table `studentgrades`
 --
 
-CREATE TABLE IF NOT EXISTS `studentgrades` (
-  `gradeid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `studentgrades` (
+  `gradeid` int(11) NOT NULL,
   `term` varchar(5) NOT NULL,
   `testname` varchar(50) NOT NULL,
   `grade` varchar(2) NOT NULL,
@@ -561,9 +550,8 @@ CREATE TABLE IF NOT EXISTS `studentgrades` (
   `subject` varchar(50) NOT NULL,
   `year` int(4) NOT NULL,
   `percentagemarks` float NOT NULL,
-  `rawmarks` float NOT NULL,
-  PRIMARY KEY (`gradeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+  `rawmarks` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `studentgrades`
@@ -621,12 +609,11 @@ INSERT INTO `studentgrades` (`gradeid`, `term`, `testname`, `grade`, `marksgaine
 -- Table structure for table `studentselectedsubjects`
 --
 
-CREATE TABLE IF NOT EXISTS `studentselectedsubjects` (
-  `studentselectedsubjects` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `studentselectedsubjects` (
+  `studentselectedsubjects` int(11) NOT NULL,
   `studentid` varchar(25) NOT NULL,
-  `subjects` varchar(500) NOT NULL,
-  PRIMARY KEY (`studentselectedsubjects`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `subjects` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -634,12 +621,11 @@ CREATE TABLE IF NOT EXISTS `studentselectedsubjects` (
 -- Table structure for table `subject`
 --
 
-CREATE TABLE IF NOT EXISTS `subject` (
-  `subjectid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `subject` (
+  `subjectid` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `category` varchar(50) NOT NULL,
-  PRIMARY KEY (`subjectid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  `category` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subject`
@@ -664,11 +650,10 @@ INSERT INTO `subject` (`subjectid`, `name`, `category`) VALUES
 -- Table structure for table `subjectcategory`
 --
 
-CREATE TABLE IF NOT EXISTS `subjectcategory` (
-  `subjectcategoryid` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`subjectcategoryid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+CREATE TABLE `subjectcategory` (
+  `subjectcategoryid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subjectcategory`
@@ -687,12 +672,11 @@ INSERT INTO `subjectcategory` (`subjectcategoryid`, `name`) VALUES
 -- Table structure for table `subjectchoiceclass`
 --
 
-CREATE TABLE IF NOT EXISTS `subjectchoiceclass` (
-  `subjectchoiceclass` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `subjectchoiceclass` (
+  `subjectchoiceclass` int(11) NOT NULL,
   `class` varchar(25) NOT NULL,
-  `subjects` varchar(500) NOT NULL,
-  PRIMARY KEY (`subjectchoiceclass`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `subjects` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subjectchoiceclass`
@@ -707,13 +691,12 @@ INSERT INTO `subjectchoiceclass` (`subjectchoiceclass`, `class`, `subjects`) VAL
 -- Table structure for table `subjectteacher`
 --
 
-CREATE TABLE IF NOT EXISTS `subjectteacher` (
-  `subjectteacherid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `subjectteacher` (
+  `subjectteacherid` int(11) NOT NULL,
   `subjectid` int(11) NOT NULL,
   `teacherdetailsid` int(11) NOT NULL,
-  `classesid` int(11) NOT NULL,
-  PRIMARY KEY (`subjectteacherid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `classesid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -721,12 +704,11 @@ CREATE TABLE IF NOT EXISTS `subjectteacher` (
 -- Table structure for table `teacheradmissionlogin`
 --
 
-CREATE TABLE IF NOT EXISTS `teacheradmissionlogin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `teacheradmissionlogin` (
+  `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `teacheradmissionlogin`
@@ -741,8 +723,8 @@ INSERT INTO `teacheradmissionlogin` (`id`, `username`, `password`) VALUES
 -- Table structure for table `teacherdetails`
 --
 
-CREATE TABLE IF NOT EXISTS `teacherdetails` (
-  `teacherdetailsid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `teacherdetails` (
+  `teacherdetailsid` int(11) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `password` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
@@ -754,9 +736,8 @@ CREATE TABLE IF NOT EXISTS `teacherdetails` (
   `postaladdress` varchar(50) NOT NULL,
   `username` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `phonenumber` varchar(25) NOT NULL,
-  `birthday` date NOT NULL,
-  PRIMARY KEY (`teacherdetailsid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `birthday` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `teacherdetails`
@@ -764,6 +745,291 @@ CREATE TABLE IF NOT EXISTS `teacherdetails` (
 
 INSERT INTO `teacherdetails` (`teacherdetailsid`, `firstname`, `lastname`, `password`, `nationalid`, `nationality`, `province`, `gender`, `admissiondate`, `postaladdress`, `username`, `phonenumber`, `birthday`) VALUES
 (1, 'Sammy', 'Bett', 'sammy', '30043271', 'Kenyan', 'Rift valley', 'Male', '2013-11-19', '9082,eldoret', 'sammy', '0702000775', '1993-11-10');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admissionlogfile`
+--
+ALTER TABLE `admissionlogfile`
+  ADD PRIMARY KEY (`admissionlogfileid`);
+
+--
+-- Indexes for table `admissionlogin`
+--
+ALTER TABLE `admissionlogin`
+  ADD PRIMARY KEY (`admissionloginid`);
+
+--
+-- Indexes for table `boardadmissionlogin`
+--
+ALTER TABLE `boardadmissionlogin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `boarddetails`
+--
+ALTER TABLE `boarddetails`
+  ADD PRIMARY KEY (`boarddetailsid`);
+
+--
+-- Indexes for table `currentterm`
+--
+ALTER TABLE `currentterm`
+  ADD PRIMARY KEY (`currenttermid`);
+
+--
+-- Indexes for table `exams`
+--
+ALTER TABLE `exams`
+  ADD PRIMARY KEY (`examsid`);
+
+--
+-- Indexes for table `examspecificmeangrade`
+--
+ALTER TABLE `examspecificmeangrade`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `footer`
+--
+ALTER TABLE `footer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gradingsystem`
+--
+ALTER TABLE `gradingsystem`
+  ADD PRIMARY KEY (`gradingsystemid`);
+
+--
+-- Indexes for table `individualmeangrade`
+--
+ALTER TABLE `individualmeangrade`
+  ADD PRIMARY KEY (`individualmeangradeid`);
+
+--
+-- Indexes for table `meangradegrading`
+--
+ALTER TABLE `meangradegrading`
+  ADD PRIMARY KEY (`meangradegradingid`);
+
+--
+-- Indexes for table `streams`
+--
+ALTER TABLE `streams`
+  ADD PRIMARY KEY (`streamsid`);
+
+--
+-- Indexes for table `studentadmissionlogin`
+--
+ALTER TABLE `studentadmissionlogin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `studentbasicsubject`
+--
+ALTER TABLE `studentbasicsubject`
+  ADD PRIMARY KEY (`studentbasicsubjectid`);
+
+--
+-- Indexes for table `studentdetails`
+--
+ALTER TABLE `studentdetails`
+  ADD PRIMARY KEY (`studentdetailsid`);
+
+--
+-- Indexes for table `studentgrades`
+--
+ALTER TABLE `studentgrades`
+  ADD PRIMARY KEY (`gradeid`);
+
+--
+-- Indexes for table `studentselectedsubjects`
+--
+ALTER TABLE `studentselectedsubjects`
+  ADD PRIMARY KEY (`studentselectedsubjects`);
+
+--
+-- Indexes for table `subject`
+--
+ALTER TABLE `subject`
+  ADD PRIMARY KEY (`subjectid`);
+
+--
+-- Indexes for table `subjectcategory`
+--
+ALTER TABLE `subjectcategory`
+  ADD PRIMARY KEY (`subjectcategoryid`);
+
+--
+-- Indexes for table `subjectchoiceclass`
+--
+ALTER TABLE `subjectchoiceclass`
+  ADD PRIMARY KEY (`subjectchoiceclass`);
+
+--
+-- Indexes for table `subjectteacher`
+--
+ALTER TABLE `subjectteacher`
+  ADD PRIMARY KEY (`subjectteacherid`);
+
+--
+-- Indexes for table `teacheradmissionlogin`
+--
+ALTER TABLE `teacheradmissionlogin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `teacherdetails`
+--
+ALTER TABLE `teacherdetails`
+  ADD PRIMARY KEY (`teacherdetailsid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admissionlogfile`
+--
+ALTER TABLE `admissionlogfile`
+  MODIFY `admissionlogfileid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `admissionlogin`
+--
+ALTER TABLE `admissionlogin`
+  MODIFY `admissionloginid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `boardadmissionlogin`
+--
+ALTER TABLE `boardadmissionlogin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `boarddetails`
+--
+ALTER TABLE `boarddetails`
+  MODIFY `boarddetailsid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `currentterm`
+--
+ALTER TABLE `currentterm`
+  MODIFY `currenttermid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `exams`
+--
+ALTER TABLE `exams`
+  MODIFY `examsid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `examspecificmeangrade`
+--
+ALTER TABLE `examspecificmeangrade`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `footer`
+--
+ALTER TABLE `footer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `gradingsystem`
+--
+ALTER TABLE `gradingsystem`
+  MODIFY `gradingsystemid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+
+--
+-- AUTO_INCREMENT for table `individualmeangrade`
+--
+ALTER TABLE `individualmeangrade`
+  MODIFY `individualmeangradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `meangradegrading`
+--
+ALTER TABLE `meangradegrading`
+  MODIFY `meangradegradingid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `streams`
+--
+ALTER TABLE `streams`
+  MODIFY `streamsid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `studentadmissionlogin`
+--
+ALTER TABLE `studentadmissionlogin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `studentbasicsubject`
+--
+ALTER TABLE `studentbasicsubject`
+  MODIFY `studentbasicsubjectid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `studentdetails`
+--
+ALTER TABLE `studentdetails`
+  MODIFY `studentdetailsid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `studentgrades`
+--
+ALTER TABLE `studentgrades`
+  MODIFY `gradeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT for table `studentselectedsubjects`
+--
+ALTER TABLE `studentselectedsubjects`
+  MODIFY `studentselectedsubjects` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subject`
+--
+ALTER TABLE `subject`
+  MODIFY `subjectid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `subjectcategory`
+--
+ALTER TABLE `subjectcategory`
+  MODIFY `subjectcategoryid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `subjectchoiceclass`
+--
+ALTER TABLE `subjectchoiceclass`
+  MODIFY `subjectchoiceclass` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `subjectteacher`
+--
+ALTER TABLE `subjectteacher`
+  MODIFY `subjectteacherid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `teacheradmissionlogin`
+--
+ALTER TABLE `teacheradmissionlogin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `teacherdetails`
+--
+ALTER TABLE `teacherdetails`
+  MODIFY `teacherdetailsid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

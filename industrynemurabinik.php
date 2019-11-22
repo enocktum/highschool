@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -203,22 +203,22 @@ xmlhttp.send();
 			$paymentno=$one."_".$two.$three;
 			//end of payment no
 			//term
-			$te=mysql_query("select * from currentterm");
-			$rm=mysql_fetch_array($te);
+			$te=mysqli_query($con,"select * from currentterm");
+			$rm=mysqli_fetch_array($te);
 			$term=$rm['term'];
 			//end of term
 			//end of other variables
 			if($to && $amount && $votehead)
 			{
-				$bank=mysql_query("select * from total");
-				$total=mysql_fetch_array($bank);
+				$bank=mysqli_query($con,"select * from total");
+				$total=mysqli_fetch_array($bank);
 				$wamount=$total['amount'];
 				$final=$wamount - $amount;
-				$updatetotal=mysql_query("update total set amount='$final'");
+				$updatetotal=mysqli_query($con,"update total set amount='$final'");
 				if($updatetotal)
 				{
 					echo"Successful withdrawal";
-					$insertpayment=mysql_query("insert into paymentbook (personresponsible,votehead,paymentno,amount,date,term) values ('$to','$votehead','$paymentno','$amount','$date','$term')");
+					$insertpayment=mysqli_query($con,"insert into paymentbook (personresponsible,votehead,paymentno,amount,date,term) values ('$to','$votehead','$paymentno','$amount','$date','$term')");
 					if($insertpayment)
 					{
 						echo" and recording in payments book";

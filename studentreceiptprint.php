@@ -1,8 +1,8 @@
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -43,8 +43,8 @@ $boarding=$_POST['boarding'];
 if($amount && $studentid && $status && $from && $recieptno && $term && $boarding)
 {
 //student name
-$tery=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-$ry=mysql_fetch_array($tery);
+$tery=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+$ry=mysqli_fetch_array($tery);
 $name=$ry['firstname']." ". $ry['middlename']." ".$ry['lastname'];
 //end of student name
 echo"<fieldset style='width:59em;'>";
@@ -82,8 +82,8 @@ echo"</tr>";
 $plode=explode(",",$voteheads);
 foreach($plode as $many)
 {
-	$vote=mysql_query("select * from voteheads where name='$many' && termit='$term'&& boardingstatus='$boarding' ");
-	while($head=mysql_fetch_array($vote))
+	$vote=mysqli_query($con,"select * from voteheads where name='$many' && termit='$term'&& boardingstatus='$boarding' ");
+	while($head=mysqli_fetch_array($vote))
 	{
 		echo"<tr>";
 		echo "<td>".$pesa=$head['name']."</td>";

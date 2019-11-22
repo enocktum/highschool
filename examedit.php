@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -171,8 +171,8 @@ if(!isset($_SESSION['examsetup']))
 			$id=$_POST['id'];
 			if($id)
 			{
-				$yeah=mysql_query("SELECT * FROM exams where examsid='$id'");
-				$str=mysql_fetch_array($yeah);
+				$yeah=mysqli_query($con,"SELECT * FROM exams where examsid='$id'");
+				$str=mysqli_fetch_array($yeah);
 				$name=$str['name'];
 				$class=$str['class'];
 				echo'

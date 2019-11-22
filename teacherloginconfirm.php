@@ -7,8 +7,8 @@ if($tarehe >= 2015)
 
 <?php
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -99,8 +99,8 @@ $maintained=$data['maintained'];
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -172,8 +172,8 @@ $maintained=$data['maintained'];
 			if($username && $password)
 			{
 				include("connection.php");
-				$query=mysql_query("select * from teacherdetails where username='$username' and password='$password'");
-				$no=mysql_num_rows($query);
+				$query=mysqli_query($con,"select * from teacherdetails where username='$username' and password='$password'");
+				$no=mysqli_num_rows($query);
 				if($no != 0)
 				{
 					session_start();

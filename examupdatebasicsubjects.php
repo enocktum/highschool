@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -167,9 +167,9 @@ if(!isset($_SESSION['examsetup']))
             <center>
             <?php
 			error_reporting(E_ERROR);
-			$cheng=mysql_query("select * from subject");
+			$cheng=mysqli_query($con,"select * from subject");
 			$subjects='';
-			while($woi=mysql_fetch_array($cheng))
+			while($woi=mysqli_fetch_array($cheng))
 			{
 				$subject=$woi['name'];
 				if($subjects=='')
@@ -181,7 +181,7 @@ if(!isset($_SESSION['examsetup']))
 					$subjects=$subjects.",".$subject;
 				}
 			}
-			$update=mysql_query("UPDATE studentbasicsubject SET subjects='$subjects'");
+			$update=mysqli_query($con,"UPDATE studentbasicsubject SET subjects='$subjects'");
 			if($update)
 			{
 				header("location:exambasicsettings");

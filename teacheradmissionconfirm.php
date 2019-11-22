@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['admissionlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -171,8 +171,8 @@ if(!isset($_SESSION['admissionlogin']))
 			if($usernam && $passwor)
 			{
 				include("connection.php");
-				$query=mysql_query("select * from teacheradmissionlogin where username='$usernam' and password='$passwor'");
-				$no=mysql_num_rows($query);
+				$query=mysqli_query($con,"select * from teacheradmissionlogin where username='$usernam' and password='$passwor'");
+				$no=mysqli_num_rows($query);
 				if($no != 0)
 				{
 					session_start();

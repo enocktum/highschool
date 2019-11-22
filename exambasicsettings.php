@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -116,8 +116,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -225,8 +225,8 @@ if(!isset($_SESSION['examsetup']))
 					<fieldset>
 					<legend>You are currently viewing grading system</legend>';
 					//internal code
-					$stre=mysql_query("select * from gradingsystem order by subject DESC");
-					$no=mysql_num_rows($stre);
+					$stre=mysqli_query($con,"select * from gradingsystem order by subject DESC");
+					$no=mysqli_num_rows($stre);
 					if($no > 0)
 					{
 						//code to view grades
@@ -241,7 +241,7 @@ if(!isset($_SESSION['examsetup']))
 						<th></th>
 						</tr>
 						';
-					    while($eams=mysql_fetch_array($stre))
+					    while($eams=mysqli_fetch_array($stre))
 						{
 							$grade=$eams['grade'];
 							$range=$eams['rangee'];
@@ -290,8 +290,8 @@ if(!isset($_SESSION['examsetup']))
 					<legend>You are currently viewing current subject-selection class</legend>';
 					//internal code
 					echo'<hr />';
-					$selectt=mysql_query("select * from subjectchoiceclass");
-					$mbus=mysql_fetch_array($selectt);
+					$selectt=mysqli_query($con,"select * from subjectchoiceclass");
+					$mbus=mysqli_fetch_array($selectt);
 					$class=$mbus['class'];
 					echo'<h2>The current subject-selection class is form: <font color="green">'.$class.'</font></h2>';
 					echo'<hr />';
@@ -333,8 +333,8 @@ if(!isset($_SESSION['examsetup']))
 					 <fieldset>
 					 <legend>Currently changing schoool opening and closing date</legend>
 					 ';
-					 $curre=mysql_query("select * from currentterm");
-					 $nt=mysql_fetch_array($curre);
+					 $curre=mysqli_query($con,"select * from currentterm");
+					 $nt=mysqli_fetch_array($curre);
 					 $openingd=$nt['openingdate'];
 					 $closingd=$nt['closingdate'];
 					 echo'<h3>CURRENT OPENING AND CLOSING DATE</h3>';
@@ -378,8 +378,8 @@ if(!isset($_SESSION['examsetup']))
 			//basic subject function
 			function basicsubject()
 			{
-				$view=mysql_query("select * from studentbasicsubject");
-				$all=mysql_fetch_array($view);
+				$view=mysqli_query($con,"select * from studentbasicsubject");
+				$all=mysqli_fetch_array($view);
 				$subjects=$all['subjects'];
 				$yote=explode(",",$subjects);
 				echo'
@@ -415,8 +415,8 @@ if(!isset($_SESSION['examsetup']))
 					<fieldset>
 					<legend>You are currently viewing subjects</legend>';
 					//internal code
-					$stre=mysql_query("select * from subject");
-					$no=mysql_num_rows($stre);
+					$stre=mysqli_query($con,"select * from subject");
+					$no=mysqli_num_rows($stre);
 					if($no > 0)
 					{
 						//code to view grades
@@ -429,7 +429,7 @@ if(!isset($_SESSION['examsetup']))
 						<th></th>
 						</tr>
 						';
-					    while($eams=mysql_fetch_array($stre))
+					    while($eams=mysqli_fetch_array($stre))
 						{
 							$grade=$eams['name'];
 							$range=$eams['category'];
@@ -473,8 +473,8 @@ if(!isset($_SESSION['examsetup']))
 					<fieldset>
 					<legend>You are currently viewing streams</legend>';
 					//internal code
-					$stre=mysql_query("select * from streams");
-					$no=mysql_num_rows($stre);
+					$stre=mysqli_query($con,"select * from streams");
+					$no=mysqli_num_rows($stre);
 					if($no > 0)
 					{
 						//code to view grades
@@ -486,7 +486,7 @@ if(!isset($_SESSION['examsetup']))
 						<th></th>
 						</tr>
 						';
-					    while($eams=mysql_fetch_array($stre))
+					    while($eams=mysqli_fetch_array($stre))
 						{
 							$grade=$eams['name'];
 							$id=$eams['streamsid'];
@@ -529,8 +529,8 @@ if(!isset($_SESSION['examsetup']))
 					<fieldset>
 					<legend>You are currently viewing exams</legend>';
 					//internal code
-					$stre=mysql_query("select * from exams");
-					$no=mysql_num_rows($stre);
+					$stre=mysqli_query($con,"select * from exams");
+					$no=mysqli_num_rows($stre);
 					if($no > 0)
 					{
 						//code to view grades
@@ -543,7 +543,7 @@ if(!isset($_SESSION['examsetup']))
 						<th></th>
 						</tr>
 						';
-					    while($eams=mysql_fetch_array($stre))
+					    while($eams=mysqli_fetch_array($stre))
 						{
 							$grade=$eams['name'];
 							$class=$eams['class'];

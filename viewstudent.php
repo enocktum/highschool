@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -136,8 +136,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -217,7 +217,7 @@ xmlhttp.send();
 			{
 				if($choice=="change status")
 				{
-					$check=mysql_query("select * from studentdetails where status='1'");
+					$check=mysqli_query($con,"select * from studentdetails where status='1'");
 			          echo"<table border='1'  style='width:100%;'>";
 			          echo"<tr>";
 			          echo"<th>name</th>";
@@ -225,7 +225,7 @@ xmlhttp.send();
 			          echo"<th>current status</th>";
 					  echo"<th></th>";
 			          echo"</tr>";
-		              while($data=mysql_fetch_array($check))
+		              while($data=mysqli_fetch_array($check))
 			         {
 				      echo"<tr>";
 				      echo"<td>".$data['firstname']." ".$data['lastname']." ".$data['middlename']."</td>";
@@ -270,7 +270,7 @@ xmlhttp.send();
 			    }
 				elseif($choice=="boarding status")
 			    {
-					  $check=mysql_query("select * from studentdetails where status='1'");
+					  $check=mysqli_query($con,"select * from studentdetails where status='1'");
 			          echo"<table border='1'  style='width:100%;'>";
 			          echo"<tr>";
 			          echo"<th>name</th>";
@@ -278,7 +278,7 @@ xmlhttp.send();
 			          echo"<th>boarding status</th>";
 					  echo"<th></th>";
 			          echo"</tr>";
-		              while($data=mysql_fetch_array($check))
+		              while($data=mysqli_fetch_array($check))
 			         {
 				      echo"<tr>";
 				      echo"<td>".$data['firstname']." ".$data['lastname']." ".$data['middlename']."</td>";
@@ -344,8 +344,8 @@ xmlhttp.send();
 				elseif($choice=="retire graduating students")
 				{
 				     include"connection.php";
-					 $pery=mysql_query("select * from studentdetails where currentclass='4' && status='1'");
-					 $no=mysql_num_rows($pery);
+					 $pery=mysqli_query($con,"select * from studentdetails where currentclass='4' && status='1'");
+					 $no=mysqli_num_rows($pery);
 					 if($no!=0)
 					 {
 					    $yote=array();
@@ -360,7 +360,7 @@ xmlhttp.send();
 						 <th>RETIRE?</th>
 						 </tr>
 						 ';
-						 while($yeah=mysql_fetch_array($pery))
+						 while($yeah=mysqli_fetch_array($pery))
 						 {
 						     $username=$yeah['admissionnumber'];
 							 $yote[$username]=$username;
@@ -403,8 +403,8 @@ xmlhttp.send();
 			}
 			else
 			{
-			$check=mysql_query("select * from studentdetails where status='1'");
-			$no=mysql_num_rows($check);
+			$check=mysqli_query($con,"select * from studentdetails where status='1'");
+			$no=mysqli_num_rows($check);
 			if($no>0)
 			{
 			echo"<table border='1' style='width:100%;'>";
@@ -416,7 +416,7 @@ xmlhttp.send();
 			echo"<th>parent name</th>";
 			echo"<th>current class</th>";
 			echo"</tr>";
-			while($data=mysql_fetch_array($check))
+			while($data=mysqli_fetch_array($check))
 			{
 				echo"<tr>";
 				echo"<td>".$data['firstname']." ".$data['middlename']." ".$data['lastname']."</td>";

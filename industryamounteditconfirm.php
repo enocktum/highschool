@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -195,17 +195,17 @@ xmlhttp.send();
 			$datepaid=date("Y-m-d");
 			$amount=$_POST['amount'];
 			//getting term
-			$jung=mysql_query("select * from currentterm");
-			$nguj=mysql_fetch_array($jung);
+			$jung=mysqli_query($con,"select * from currentterm");
+			$nguj=mysqli_fetch_array($jung);
 			$term=$nguj['term'];
 			//end of term
 			if(isset($studentid) && isset($amount))
 			{
-			     $nyeri=mysql_query("update currentcharges set balance='$amount' where studentid='$studentid'");
+			     $nyeri=mysqli_query($con,"update currentcharges set balance='$amount' where studentid='$studentid'");
 				 if($nyeri)
 				 {
-				     $findout=mysql_query("select * from currentcharges where studentid='$studentid'");
-					 $outta=mysql_fetch_array($findout);
+				     $findout=mysqli_query($con,"select * from currentcharges where studentid='$studentid'");
+					 $outta=mysqli_fetch_array($findout);
 					 $feespayable=$outta['balance'];
 					 //start of checking student status
 					if($feespayable<0)
@@ -225,7 +225,7 @@ xmlhttp.send();
 					$studentstatus="Unpaid or Unconfirmed(fees posted by bursar directly)";
 					}
 					//end of checking student status
-				     $q=mysql_query("insert into financestatement (feespaid,term,studentid,datedeposited,studentstatus,feespayable) values ('$amount','$term','$studentid','$datepaid','$studentstatus','$feespayable')");
+				     $q=mysqli_query($con,"insert into financestatement (feespaid,term,studentid,datedeposited,studentstatus,feespayable) values ('$amount','$term','$studentid','$datepaid','$studentstatus','$feespayable')");
 					 if($q)
 					 {
 					     echo"<font color='green'>fee for student <u><strong> $studentid </strong></u> has been successfully updated and the financial statement up to date</font><br/><a href='industryfinancialstatement'>go back</a>";

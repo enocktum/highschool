@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -99,8 +99,8 @@ if(!isset($_SESSION['teacherlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -175,8 +175,8 @@ if(!isset($_SESSION['teacherlogin']))
 			select the exam you are assigning grades for<br/><select name="exam" style="width:60%;">
 			<?php
 			include "connection.php";
-			$ex=mysql_query("select * from exams");
-			while($ams=mysql_fetch_array($ex))
+			$ex=mysqli_query($con,"select * from exams");
+			while($ams=mysqli_fetch_array($ex))
 			{
 			echo "<option>".$ams['name']."</option>";
 			}
@@ -185,8 +185,8 @@ if(!isset($_SESSION['teacherlogin']))
 			select the subject<br/><select name="subject" style="width:60%;">
 			<?php
 			include "connection.php";
-			$ex=mysql_query("select * from subject");
-			while($ams=mysql_fetch_array($ex))
+			$ex=mysqli_query($con,"select * from subject");
+			while($ams=mysqli_fetch_array($ex))
 			{
 			echo "<option>".$ams['name']."</option>";
 			}

@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -251,9 +251,9 @@ xmlhttp.send();
 				echo"Given to:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name='nameofperson' placeholder='enter name of person assigned' size='32' required='required'/><br/><br/>";
 				echo"enter amount<input type='text' name='amount' placeholder='enter amount to withdraw' size='32' required='required'/><br/><br/>";
 				
-				$vote=mysql_query("select * from voteheads where termit='one'");
+				$vote=mysqli_query($con,"select * from voteheads where termit='one'");
 				echo"amount use: <select name='votehead' style='width:39%;'>";
-				while($head=mysql_fetch_array($vote))
+				while($head=mysqli_fetch_array($vote))
 				{
 					echo"<option>".$head['name']."</option>";
 				}
@@ -267,8 +267,8 @@ xmlhttp.send();
 			{
 				//start viewing cashbook
 				echo"<h2>School Cash Book</h2>";
-				$cash=mysql_query("select * from cashbook");
-				$nu=mysql_num_rows($cash);
+				$cash=mysqli_query($con,"select * from cashbook");
+				$nu=mysqli_num_rows($cash);
 				if($nu > 0)
 				{
 					echo"<table border='1' style='width:100%;'>";
@@ -281,12 +281,12 @@ xmlhttp.send();
 					echo"<th>TOTAL</th>";
 					echo"<th>VOTEHEAD</th>";
 					echo"</tr>";
-					while($book=mysql_fetch_array($cash))
+					while($book=mysqli_fetch_array($cash))
 					{
 						echo"<tr>";
 						$id=$book['origin'];
-						$student=mysql_query("select * from studentdetails where admissionnumber='$id'");
-						$identity=mysql_fetch_array($student);
+						$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$id'");
+						$identity=mysqli_fetch_array($student);
 						$name=$identity['firstname']." ".$identity['middlename']." ".$identity['lastname'];
 						echo"<td>".$book['date']."</td>";
 						echo"<td style='text-transform:uppercase;'>".$name."</td>";
@@ -309,8 +309,8 @@ xmlhttp.send();
 			{
 				//viewing withdrawals
 				echo"<h2>School Withdrawals</h2>";
-				$cash=mysql_query("select * from paymentbook");
-				$nu=mysql_num_rows($cash);
+				$cash=mysqli_query($con,"select * from paymentbook");
+				$nu=mysqli_num_rows($cash);
 				if($nu > 0)
 				{
 					echo"<table border='1' style='width:100%;'>";
@@ -322,7 +322,7 @@ xmlhttp.send();
 					echo"<th>PURPOSE</th>";
 					echo"<th>TERM</th>";
 					echo"</tr>";
-					while($book=mysql_fetch_array($cash))
+					while($book=mysqli_fetch_array($cash))
 					{
 						echo"<tr>";
 						echo"<td>".$book['date']."</td>";
@@ -344,8 +344,8 @@ xmlhttp.send();
 			function viewgrandtotal()
 			{
 				//viewing grand total	
-				$grand=mysql_query("select * from total");
-				$total=mysql_fetch_array($grand);
+				$grand=mysqli_query($con,"select * from total");
+				$total=mysqli_fetch_array($grand);
 				$grandtotal=$total['amount'];
 				echo"<h2>The total amount in the school account is <u><b>kshs.".$grandtotal."</u></b></h2>";
 				//end of viewing grand total

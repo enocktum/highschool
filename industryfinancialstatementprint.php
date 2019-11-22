@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -27,14 +27,14 @@ if(!isset($_SESSION['industrylogin']))
 				$studentid=$_POST['studid'];
 				if($studentid)
 				{
-				$perry=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$erry=mysql_fetch_array($perry);
+				$perry=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$erry=mysqli_fetch_array($perry);
 				$name=$erry['firstname']." ".$erry['middlename']." ".$erry['lastname'];
 				echo"<h1 style='text-transform:uppercase;font-size:0.9em;'><b>financial statements FOR $name as at $date</b></h1>";
 			    //start of displaying current charges
 				echo"<h3 style='text-transform:uppercase;'>CURRENT CHARGES</h3>";
-				$yerry=mysql_query("select * from currentcharges where status='1' && studentid='$studentid'");
-				$no=mysql_num_rows($yerry);
+				$yerry=mysqli_query($con,"select * from currentcharges where status='1' && studentid='$studentid'");
+				$no=mysqli_num_rows($yerry);
 				if($no > 0)
 				{
 				echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -46,12 +46,12 @@ if(!isset($_SESSION['industrylogin']))
 				echo"<th><b>DATE</b></u></th>";
 				echo"<th><b>BOARDING_STATUS</b></u></th>";
 				echo"</tr>";
-				while($pata=mysql_fetch_array($yerry))
+				while($pata=mysqli_fetch_array($yerry))
 				{
 				echo"<tr>";
 				$studentid=$pata['studentid'];
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$course=$nam['course'];
 				$boarding=$nam['boardingstatus'];
 				$name=$nam['firstname']." ".$nam['middlename']." ".$nam['lastname'];
@@ -74,8 +74,8 @@ if(!isset($_SESSION['industrylogin']))
 				echo"";
 				
 				echo"<h3 style='text-transform:uppercase;'>Financial statement</h3><br/>";
-				$query=mysql_query("select * from financestatement where studentid='$studentid' ORDER BY financestatementid");
-				$number=mysql_num_rows($query);
+				$query=mysqli_query($con,"select * from financestatement where studentid='$studentid' ORDER BY financestatementid");
+				$number=mysqli_num_rows($query);
 				if($number > 0)
 				{
 				echo"<table border='1' style='width:100%;text-align:left;'>";
@@ -86,7 +86,7 @@ if(!isset($_SESSION['industrylogin']))
 				echo"<th><b><font color='red'>FEES_STATUS</font></b></th>";
 				echo"<th><b>TERM</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				echo"<tr>";
 				echo"<td>".$data['datedeposited']."</td>";

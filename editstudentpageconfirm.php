@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -105,8 +105,8 @@ if(!isset($_SESSION['studentregistrationlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -186,7 +186,7 @@ if(!isset($_SESSION['studentregistrationlogin']))
 			if(!$pass)
 			{
             include("connection.php");
-            $query=mysql_query("update studentdetails set firstname='$firstname',middlename='$middlename',lastname='$lastname',birthday='$birthday',province='$province',nationality='$nationality',parentname='$parentname',parentphonenumber='$parentphonenumber',parentpostaladdress='$parentpostaladdress',password='$password',currentclass='$currentclass' where studentdetailsid='$editidentifier'");
+            $query=mysqli_query($con,"update studentdetails set firstname='$firstname',middlename='$middlename',lastname='$lastname',birthday='$birthday',province='$province',nationality='$nationality',parentname='$parentname',parentphonenumber='$parentphonenumber',parentpostaladdress='$parentpostaladdress',password='$password',currentclass='$currentclass' where studentdetailsid='$editidentifier'");
             if($query)
             {
 	        header("location:viewstudent");

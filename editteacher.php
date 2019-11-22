@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -105,8 +105,8 @@ if(!isset($_SESSION['teacherregistrationlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -169,7 +169,7 @@ if(!isset($_SESSION['teacherregistrationlogin']))
 			<p>
             <?php
 			include("connection.php");
-			$check=mysql_query("select * from teacherdetails");
+			$check=mysqli_query($con,"select * from teacherdetails");
 			echo"<table border='1' style='width:100%;'>";
 			echo"<tr>";
 			echo"<th>Full Name</th>";
@@ -178,7 +178,7 @@ if(!isset($_SESSION['teacherregistrationlogin']))
 			echo"<th>Phonenumber</th>";
 			echo"<th></th>";
 			echo"</tr>";
-			while($data=mysql_fetch_array($check))
+			while($data=mysqli_fetch_array($check))
 			{
 				echo"<tr>";
 				echo"<td>".$data['firstname']." ".$data['lastname']."</td>";

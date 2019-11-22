@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -125,8 +125,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -205,14 +205,14 @@ xmlhttp.send();
 			{
 			if($username && $year && $term && $percentage && $subject && $class && $exam)
 			{
-				$ochei=mysql_query("select * from studentgrades where term='$term' && testname='$exam' && studentid='$username' && class='$class' && subject='$subject' && year='$year'");
-				$no=mysql_num_rows($ochei);
+				$ochei=mysqli_query($con,"select * from studentgrades where term='$term' && testname='$exam' && studentid='$username' && class='$class' && subject='$subject' && year='$year'");
+				$no=mysqli_num_rows($ochei);
 				if($no == 1)
 				{
 			     $marksgained=$percentage/2;
 			     //start of calculating grade
-					$gradi=mysql_query("select * from gradingsystem");
-					while($systim=mysql_fetch_array($gradi))
+					$gradi=mysqli_query($con,"select * from gradingsystem");
+					while($systim=mysqli_fetch_array($gradi))
 					{
 					     $rangee=$systim['rangee'];
 						 $grade=$systim['grade'];
@@ -224,13 +224,13 @@ xmlhttp.send();
 						      $gradit=$grade;
 						 }
 					}
-					$squi=mysql_query("select * from gradingsystem where grade='$gradit' && subject='$subject'");
-					while($rel=mysql_fetch_array($squi))
+					$squi=mysqli_query($con,"select * from gradingsystem where grade='$gradit' && subject='$subject'");
+					while($rel=mysqli_fetch_array($squi))
 					{
 						$comments=$rel['comments'];
 					}
 					//end of calculating grade
-					$update=mysql_query("update studentgrades set grade='$gradit',marksgained='$marksgained',remarks='$comments',percentagemarks='$percentage' where studentid='$username' && testname='$exam' && term='$term' && class='$class' && subject='$subject' && year='$year'");
+					$update=mysqli_query($con,"update studentgrades set grade='$gradit',marksgained='$marksgained',remarks='$comments',percentagemarks='$percentage' where studentid='$username' && testname='$exam' && term='$term' && class='$class' && subject='$subject' && year='$year'");
 					if($update)
 					{
 					     echo"<font color='green'>grade for student with admission number $username has been successfully updated</font><br/><a href='teachersperformancereport'>Go Back</a>";

@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -174,8 +174,8 @@ if(!isset($_SESSION['examsetup']))
 			$comments=$_POST['comments'];
 			if($grade && $range && $subject && $comments)
 			{
-				$check=mysql_query("select * from gradingsystem where grade='$grade' && subject='$subject'");
-				$number=mysql_num_rows($check);
+				$check=mysqli_query($con,"select * from gradingsystem where grade='$grade' && subject='$subject'");
+				$number=mysqli_num_rows($check);
 				if($number > 0)
 				{
 					echo"grade already exists<br/><a href='exambasicsettings'>Go Back</a>";
@@ -183,7 +183,7 @@ if(!isset($_SESSION['examsetup']))
 				else
 				{
 					//start of insertion query
-					$ingiza=mysql_query("insert into gradingsystem (grade,rangee,subject,comments) values ('$grade','$range','$subject','$comments')");
+					$ingiza=mysqli_query($con,"insert into gradingsystem (grade,rangee,subject,comments) values ('$grade','$range','$subject','$comments')");
 					if($ingiza)
 					{
 						header("location:exambasicsettings");
@@ -208,8 +208,8 @@ if(!isset($_SESSION['examsetup']))
 				chose subject:&nbsp;&nbsp;&nbsp;&nbsp;
                 <select name="subject">
                 <?php
-				$sub=mysql_query("select * from subject");
-				while($ject=mysql_fetch_array($sub))
+				$sub=mysqli_query($con,"select * from subject");
+				while($ject=mysqli_fetch_array($sub))
 				{
 					echo"<option>".$ject['name']."</option>";
 				}

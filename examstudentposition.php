@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -39,8 +39,8 @@ if(!isset($_SESSION['examsetup']))
 			$year=$_POST['year'];
 			if($class && $term && $year)
 			{
-			      $eggs=mysql_query("select * from individualmeangrade where class='$class' && term='$term' && year='$year' order by meangrade DESC");
-				  $num=mysql_num_rows($eggs);
+			      $eggs=mysqli_query($con,"select * from individualmeangrade where class='$class' && term='$term' && year='$year' order by meangrade DESC");
+				  $num=mysqli_num_rows($eggs);
 				  
 				  if($num > 0)
 				  {
@@ -59,12 +59,12 @@ if(!isset($_SESSION['examsetup']))
 				  ';
 				  $position=1;
 				  $totalmeangrade=0;
-				  while($allstudents=mysql_fetch_array($eggs))
+				  while($allstudents=mysqli_fetch_array($eggs))
 				  {
 				    $meangrade=$allstudents['meangrade'];
 					$studentid=$allstudents['studentid'];
-					$hey=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-					$ha=mysql_fetch_array($hey);
+					$hey=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+					$ha=mysqli_fetch_array($hey);
 					$name=$ha['firstname']." ".$ha['middlename']." ".$ha['lastname'];
 				     echo'
 					 <tr>

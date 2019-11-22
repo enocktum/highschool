@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -99,8 +99,8 @@ if(!isset($_SESSION['teacherlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -183,8 +183,8 @@ if(!isset($_SESSION['teacherlogin']))
                     <h3>select the options below and submit to get result</h3>
                     select subject:<br/><select style='width:25em;text-align:center;' name="subject">
                     <?php
-                    $sub=mysql_query("select * from subject");
-			        while($ject=mysql_fetch_array($sub))
+                    $sub=mysqli_query($con,"select * from subject");
+			        while($ject=mysqli_fetch_array($sub))
 			        {
 						echo "<option>".$ject['name']."</option>";
 			        }
@@ -217,8 +217,8 @@ if(!isset($_SESSION['teacherlogin']))
                     select exam:<br/>
                     <select style='width:25em;text-align:center;' name="exam">
                     <?php
-                    $ex=mysql_query("select * from exams");
-			        while($ams=mysql_fetch_array($ex))
+                    $ex=mysqli_query($con,"select * from exams");
+			        while($ams=mysqli_fetch_array($ex))
 			        {
 						echo "<option>".$ams['name']."</option>";
 			        }
@@ -244,8 +244,8 @@ if(!isset($_SESSION['teacherlogin']))
 					<input type="text" name="percentage" placeholder="student marks to be updated goes here(in %)" style='width:25em;text-align:center;' required="required"/><br/><br/>
                     select subject:<br/><select style='width:25em;text-align:center;' name="subject">
                     <?php
-                    $sub=mysql_query("select * from subject");
-			        while($ject=mysql_fetch_array($sub))
+                    $sub=mysqli_query($con,"select * from subject");
+			        while($ject=mysqli_fetch_array($sub))
 			        {
 						echo "<option>".$ject['name']."</option>";
 			        }
@@ -278,8 +278,8 @@ if(!isset($_SESSION['teacherlogin']))
                     select exam:<br/>
                     <select style='width:25em;text-align:center;' name="exam">
                     <?php
-                    $ex=mysql_query("select * from exams");
-			        while($ams=mysql_fetch_array($ex))
+                    $ex=mysqli_query($con,"select * from exams");
+			        while($ams=mysqli_fetch_array($ex))
 			        {
 						echo "<option>".$ams['name']."</option>";
 			        }

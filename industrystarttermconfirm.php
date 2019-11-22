@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -192,13 +192,13 @@ xmlhttp.send();
 			error_reporting(E_ERROR);
 			include("connection.php");
 			$confirm=$_POST['confirm'];
-			$uerry=mysql_query("select * from currentcharges where status='1'");
-			$no=mysql_num_rows($uerry);
-			$yo=mysql_query("select * from currentterm");
-			$maga=mysql_fetch_array($yo);
+			$uerry=mysqli_query($con,"select * from currentcharges where status='1'");
+			$no=mysqli_num_rows($uerry);
+			$yo=mysqli_query($con,"select * from currentterm");
+			$maga=mysqli_fetch_array($yo);
 			if($no>0)
 			{
-			$uer=mysql_fetch_array($uerry);
+			$uer=mysqli_fetch_array($uerry);
 			$tamit=$maga['term'];
 			if($tamit=='one')
 			{
@@ -217,23 +217,23 @@ xmlhttp.send();
 			if($confirm)
 			{
 			
-			$me=mysql_query("select * from currentcharges where status='1'");
+			$me=mysqli_query($con,"select * from currentcharges where status='1'");
 			//start of while
-			while($data=mysql_fetch_array($me))
+			while($data=mysqli_fetch_array($me))
 			{
 			$studentid=$data['studentid'];
-			$board=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-			$ing=mysql_fetch_array($board);
+			$board=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+			$ing=mysqli_fetch_array($board);
 			$checkstat=$ing['status'];
 			if($checkstat=="1")
 			{
 			$boarding=$ing['boardingstatus'];
 			//start of calculating fees
-			$terry=mysql_query("select * from schoolinfo where termit='$term' && boardingstatus='$boarding'");
-			$f=mysql_fetch_array($terry);
+			$terry=mysqli_query($con,"select * from schoolinfo where termit='$term' && boardingstatus='$boarding'");
+			$f=mysqli_fetch_array($terry);
 			$termfees=$f['feesamount'];
-			$yerry=mysql_query("select * from currentcharges where studentid='$studentid' && status='1'");
-			$ry=mysql_fetch_array($yerry);
+			$yerry=mysqli_query($con,"select * from currentcharges where studentid='$studentid' && status='1'");
+			$ry=mysqli_fetch_array($yerry);
 			$balance=$ry['balance'];
 			$currentfee=$termfees + $balance;
 			if($currentfee<0)
@@ -249,15 +249,15 @@ xmlhttp.send();
 			$studentstatus="Fully Paid";
 			}
 			
-			$update=mysql_query("update currentcharges set balance='$currentfee',term='$term',date='$date' where studentid='$studentid' && status='1'");
+			$update=mysqli_query($con,"update currentcharges set balance='$currentfee',term='$term',date='$date' where studentid='$studentid' && status='1'");
 			if($update)
 			{
 			echo"<font color='green'>student ".$studentid." current charges, </font> ";
-			$update1=mysql_query("update currentterm set term='$term'");
+			$update1=mysqli_query($con,"update currentterm set term='$term'");
 			if($update1)
 			{
 			echo"<font color='green'>school current term has been updated successfully </font>";
-			$insert=mysql_query("insert into financestatement (feespaid,studentid,studentstatus,feespayable,datedeposited,term) values ('0','$studentid','$studentstatus','$currentfee','$date','$term')");
+			$insert=mysqli_query($con,"insert into financestatement (feespaid,studentid,studentstatus,feespayable,datedeposited,term) values ('0','$studentid','$studentstatus','$currentfee','$date','$term')");
 			if($insert)
 			{
 			echo"<font color='green'>and finance statement has been successfully inserted.<br/><br/></font>";

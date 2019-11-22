@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -100,8 +100,8 @@ if(!isset($_SESSION['industrylogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -172,8 +172,8 @@ if(!isset($_SESSION['industrylogin']))
 			echo"<fieldset>";
 			echo"<legend><h3><center><b>TERM ONE ONCAMPUS VOTEHEADS</b></center></h3></legend>";
 			$total=0;
-			$terry=mysql_query("select * from voteheads where termit='one' && boardingstatus='oncampus' order by amount");
-			$no=mysql_num_rows($terry);
+			$terry=mysqli_query($con,"select * from voteheads where termit='one' && boardingstatus='oncampus' order by amount");
+			$no=mysqli_num_rows($terry);
 			if($no != 0)
 			{
 			echo'<table border="1" style="width:100%;">
@@ -182,7 +182,7 @@ if(!isset($_SESSION['industrylogin']))
 			<th>AMOUNT</th>
 			</tr>
 			';
-			while($dita=mysql_fetch_array($terry))
+			while($dita=mysqli_fetch_array($terry))
 			{
 				$name=$dita['name'];
 				$amount=$dita['amount'];
@@ -213,8 +213,8 @@ if(!isset($_SESSION['industrylogin']))
 			echo"<fieldset>";
 			echo"<legend><h3><center><b>TERM ONE OFFCAMPUS VOTEHEADS</b></center></h3></legend>";
 			$total=0;
-			$terry=mysql_query("select * from voteheads where termit='one' && boardingstatus='offcampus' order by amount");
-			$no=mysql_num_rows($terry);
+			$terry=mysqli_query($con,"select * from voteheads where termit='one' && boardingstatus='offcampus' order by amount");
+			$no=mysqli_num_rows($terry);
 			if($no != 0)
 			{
 			echo'<table border="1" style="width:100%;">
@@ -223,7 +223,7 @@ if(!isset($_SESSION['industrylogin']))
 			<th>AMOUNT</th>
 			</tr>
 			';
-			while($dita=mysql_fetch_array($terry))
+			while($dita=mysqli_fetch_array($terry))
 			{
 				$name=$dita['name'];
 				$amount=$dita['amount'];
@@ -255,8 +255,8 @@ if(!isset($_SESSION['industrylogin']))
 			echo"<br/><br/><fieldset>";
 			echo"<legend><h3><center><b>TERM TWO ONCAMPUS VOTEHEADS</b></center></h3></legend>";
 			$total=0;
-			$terry=mysql_query("select * from voteheads where termit='two' && boardingstatus='oncampus' order by amount");
-			$no=mysql_num_rows($terry);
+			$terry=mysqli_query($con,"select * from voteheads where termit='two' && boardingstatus='oncampus' order by amount");
+			$no=mysqli_num_rows($terry);
 			if($no != 0)
 			{
 			echo'<table border="1" style="width:100%;">
@@ -265,7 +265,7 @@ if(!isset($_SESSION['industrylogin']))
 			<th>AMOUNT</th>
 			</tr>
 			';
-			while($dita=mysql_fetch_array($terry))
+			while($dita=mysqli_fetch_array($terry))
 			{
 				$name=$dita['name'];
 				$amount=$dita['amount'];
@@ -296,8 +296,8 @@ if(!isset($_SESSION['industrylogin']))
 			echo"<fieldset>";
 			echo"<legend><h3><center><b>TERM TWO OFFCAMPUS VOTEHEADS</b></center></h3></legend>";
 			$total=0;
-			$terry=mysql_query("select * from voteheads where termit='two' && boardingstatus='offcampus' order by amount");
-			$no=mysql_num_rows($terry);
+			$terry=mysqli_query($con,"select * from voteheads where termit='two' && boardingstatus='offcampus' order by amount");
+			$no=mysqli_num_rows($terry);
 			if($no != 0)
 			{
 			echo'<table border="1" style="width:100%;">
@@ -306,7 +306,7 @@ if(!isset($_SESSION['industrylogin']))
 			<th>AMOUNT</th>
 			</tr>
 			';
-			while($dita=mysql_fetch_array($terry))
+			while($dita=mysqli_fetch_array($terry))
 			{
 				$name=$dita['name'];
 				$amount=$dita['amount'];
@@ -337,8 +337,8 @@ if(!isset($_SESSION['industrylogin']))
 			echo"<br/><br/><fieldset>";
 			echo"<legend><h3><center><b>TERM THREE ONCAMPUS VOTEHEADS</b></center></h3></legend>";
 			$total=0;
-			$terry=mysql_query("select * from voteheads where termit='three' && boardingstatus='oncampus' order by amount");
-			$no=mysql_num_rows($terry);
+			$terry=mysqli_query($con,"select * from voteheads where termit='three' && boardingstatus='oncampus' order by amount");
+			$no=mysqli_num_rows($terry);
 			if($no != 0)
 			{
 			echo'<table border="1" style="width:100%;">
@@ -347,7 +347,7 @@ if(!isset($_SESSION['industrylogin']))
 			<th>AMOUNT</th>
 			</tr>
 			';
-			while($dita=mysql_fetch_array($terry))
+			while($dita=mysqli_fetch_array($terry))
 			{
 				$name=$dita['name'];
 				$amount=$dita['amount'];
@@ -378,8 +378,8 @@ if(!isset($_SESSION['industrylogin']))
 			echo"<fieldset>";
 			echo"<legend><h3><center><b>TERM THREE OFFCAMPUS VOTEHEADS</b></center></h3></legend>";
 			$total=0;
-			$terry=mysql_query("select * from voteheads where termit='three' && boardingstatus='offcampus' order by amount");
-			$no=mysql_num_rows($terry);
+			$terry=mysqli_query($con,"select * from voteheads where termit='three' && boardingstatus='offcampus' order by amount");
+			$no=mysqli_num_rows($terry);
 			if($no != 0)
 			{
 			echo'<table border="1" style="width:100%;">
@@ -388,7 +388,7 @@ if(!isset($_SESSION['industrylogin']))
 			<th>AMOUNT</th>
 			</tr>
 			';
-			while($dita=mysql_fetch_array($terry))
+			while($dita=mysqli_fetch_array($terry))
 			{
 				$name=$dita['name'];
 				$amount=$dita['amount'];

@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -224,8 +224,8 @@ xmlhttp.send();
 				';
 				//end of printing cleared students
 				include("connection.php");
-				$query=mysql_query("select * from currentcharges where status='1' ORDER BY studentid");
-				$no=mysql_num_rows($query);
+				$query=mysqli_query($con,"select * from currentcharges where status='1' ORDER BY studentid");
+				$no=mysqli_num_rows($query);
 				if($no > 0)
 				{
 				echo"<table border='0' style='width:100%;text-align:left;'>";
@@ -237,14 +237,14 @@ xmlhttp.send();
 				echo"<th><b>DATE</b></u></th>";
 				echo"<th><b>BOARDING_STATUS</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				$balance=$data['balance'];
 				if($balance<1)
 				{
 				$studentid=$data['studentid'];
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$bal=$balance * -1;
 				$checkstat=$nam['status'];
 				if($checkstat=="1")
@@ -291,8 +291,8 @@ xmlhttp.send();
 				';
 				//end of printing uncleared students
 						 include("connection.php");
-				$query=mysql_query("select * from currentcharges where status='1' ORDER BY studentid");
-				$no=mysql_num_rows($query);
+				$query=mysqli_query($con,"select * from currentcharges where status='1' ORDER BY studentid");
+				$no=mysqli_num_rows($query);
 				if($no > 0)
 				{
 				echo"<table border='0' style='width:100%;text-align:left;'>";
@@ -304,15 +304,15 @@ xmlhttp.send();
 				echo"<th><b>DATE</b></u></th>";
 				echo"<th><b>BOARDING_STATUS</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				$balance=$data['balance'];
 				if($balance>0)
 				{
 				
 				$studentid=$data['studentid'];
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$checkstat=$nam['status'];
 				if($checkstat=="1")
 				{
@@ -372,8 +372,8 @@ xmlhttp.send();
 				';
 				//end of printing all students
 			    include("connection.php");
-				$query=mysql_query("select * from currentcharges where status='1' ORDER BY studentid");
-				$no=mysql_num_rows($query);
+				$query=mysqli_query($con,"select * from currentcharges where status='1' ORDER BY studentid");
+				$no=mysqli_num_rows($query);
 				if($no > 0)
 				{
 				echo"<table border='0' style='width:100%;text-align:left;'>";
@@ -386,11 +386,11 @@ xmlhttp.send();
 				echo"<th><b>BOARDING_STATUS</b></u></th>";
 				//echo"<th><b>EDIT AMOUNT</b></u></th>";
 				echo"</tr>";
-				while($data=mysql_fetch_array($query))
+				while($data=mysqli_fetch_array($query))
 				{
 				$studentid=$data['studentid'];
-				$student=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-				$nam=mysql_fetch_array($student);
+				$student=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+				$nam=mysqli_fetch_array($student);
 				$checkstat=$nam['status'];
 				if($checkstat=="1")
 				{

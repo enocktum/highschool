@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -99,8 +99,8 @@ if(!isset($_SESSION['industrylogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -165,8 +165,8 @@ if(!isset($_SESSION['industrylogin']))
                <form action="industrystarttermconfirm" method="post">
 			   <?php 
 					include("connection.php");
-					$termquery=mysql_query("SELECT * FROM currentterm");
-					$termdata=mysql_fetch_array($termquery);
+					$termquery=mysqli_query($con,"SELECT * FROM currentterm");
+					$termdata=mysqli_fetch_array($termquery);
 					$tam=$termdata['term'];
 					if($tam=="one")
 					{

@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -173,22 +173,22 @@ if(isset($link))
 	 $exam=$linkarray[0];
 	 $studentid=$linkarray[1];
 	 $term=$linkarray[2];
-	 $gett=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-	 $tteg=mysql_fetch_array($gett);
+	 $gett=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+	 $tteg=mysqli_fetch_array($gett);
 	 $year=date("Y");
 	 $class=$tteg['currentclass'];
 	 //start of getting all subjects done by student
-	 $kn=mysql_query("select * from subjectchoiceclass");
-	 $nk=mysql_fetch_array($kn);
+	 $kn=mysqli_query($con,"select * from subjectchoiceclass");
+	 $nk=mysqli_fetch_array($kn);
 	 $subselclass=$nk['class'];
 	 if($class >= $subselclass)
 	 {
 	     //senior students
-		 $sle=mysql_query("select * from studentselectedsubjects where studentid='$studentid'");
-		 $howm=mysql_num_rows($sle);
+		 $sle=mysqli_query($con,"select * from studentselectedsubjects where studentid='$studentid'");
+		 $howm=mysqli_num_rows($sle);
 		 if($howm==1)
 		 {
-		     $els=mysql_fetch_array($sle);
+		     $els=mysqli_fetch_array($sle);
 			 $subjex=$els['subjects'];
 			 $subjexarray=explode(",",$subjex);
 			 $ata=count($subjexarray);
@@ -204,8 +204,8 @@ if(isset($link))
 			  echo"</table>";
 			  echo"</div>";
 			  //end of all subjects selected
-			 $ojei=mysql_query("SELECT * FROM studentgrades WHERE studentid='$studentid' && class='$class' && year='$year' && testname='$exam' && term='$term'");
-			 $numberr=mysql_num_rows($ojei);
+			 $ojei=mysqli_query($con,"SELECT * FROM studentgrades WHERE studentid='$studentid' && class='$class' && year='$year' && testname='$exam' && term='$term'");
+			 $numberr=mysqli_num_rows($ojei);
 			 if($numberr==0)
 			 {
 			 //start of subjects not done
@@ -234,7 +234,7 @@ if(isset($link))
 			 {
 			 //start of partially or fully done subjects
 			 $done="";
-			 while($aja=mysql_fetch_array($ojei))
+			 while($aja=mysqli_fetch_array($ojei))
 			 {
 			     $subjeci=$aja['subject'];
 				 foreach($subjexarray as $onebyone)
@@ -294,11 +294,11 @@ if(isset($link))
 	 elseif($class < $subselclass)
 	 {
 	     //junior students
-		 $sle=mysql_query("select * from studentbasicsubject");
-		 $howm=mysql_num_rows($sle);
+		 $sle=mysqli_query($con,"select * from studentbasicsubject");
+		 $howm=mysqli_num_rows($sle);
 		 if($howm==1)
 		 {
-		     $els=mysql_fetch_array($sle);
+		     $els=mysqli_fetch_array($sle);
 			 $subjex=$els['subjects'];
 			 $subjexarray=explode(",",$subjex);
 			 $ata=count($subjexarray);
@@ -314,8 +314,8 @@ if(isset($link))
 			  echo"</table>";
 			  echo"</div>";
 			  //end of all subjects selected
-			 $ojei=mysql_query("SELECT * FROM studentgrades WHERE studentid='$studentid' && class='$class' && year='$year' && testname='$exam' && term='$term'");
-			 $numberr=mysql_num_rows($ojei);
+			 $ojei=mysqli_query($con,"SELECT * FROM studentgrades WHERE studentid='$studentid' && class='$class' && year='$year' && testname='$exam' && term='$term'");
+			 $numberr=mysqli_num_rows($ojei);
 			 if($numberr==0)
 			 {
 			 //start of subjects not done
@@ -344,7 +344,7 @@ if(isset($link))
 			 {
 			 //start of partially or fully done subjects
 			 $done="";
-			 while($aja=mysql_fetch_array($ojei))
+			 while($aja=mysqli_fetch_array($ojei))
 			 {
 			     $subjeci=$aja['subject'];
 				 foreach($subjexarray as $onebyone)

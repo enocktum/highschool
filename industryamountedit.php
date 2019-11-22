@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -195,8 +195,8 @@ xmlhttp.send();
 			$studentid=$_POST['studentid'];
 			if($studentid)
 			{
-			     $nyeri=mysql_query("select * from currentcharges where studentid='$studentid'");
-				 $meru=mysql_fetch_array($nyeri);
+			     $nyeri=mysqli_query($con,"select * from currentcharges where studentid='$studentid'");
+				 $meru=mysqli_fetch_array($nyeri);
 				 $previousamount=$meru['balance'];
 			     echo"
 				 <form action='industryamounteditconfirm' method='post'>

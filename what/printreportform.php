@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("../connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -44,14 +44,14 @@ if($want && $term && $exam && $year && $class)
 {
      if($want=="yes")
 	 {
-	     $examined=mysql_query("select * from individualmeangrade where class='$class' && year='$year' && term='$term'");
+	     $examined=mysqli_query($con,"select * from individualmeangrade where class='$class' && year='$year' && term='$term'");
 		 $loop=0;
-		 while($onebyone=mysql_fetch_array($examined))
+		 while($onebyone=mysqli_fetch_array($examined))
 		 {
 		     $loop=$loop+1;
 		     $studentidmean=$onebyone['studentid'];
-			 $allstudents=mysql_query("select * from studentdetails where currentclass='$class' && status='1'");
-			 while($studetail=mysql_fetch_array($allstudents))
+			 $allstudents=mysqli_query($con,"select * from studentdetails where currentclass='$class' && status='1'");
+			 while($studetail=mysqli_fetch_array($allstudents))
 			 {
 			     $studentidreal=$studetail['admissionnumber'];
 				 $stream=$studetail['stream'];
@@ -114,10 +114,10 @@ if($want && $term && $exam && $year && $class)
 						  <td>
 						  ';
 						  //start of getting overall position
-						  $outof=mysql_num_rows($allstudents);
-						  $sele=mysql_query("select * from individualmeangrade where class='$class' && year='$year' && term='$term' ORDER BY meangrade DESC");
+						  $outof=mysqli_num_rows($allstudents);
+						  $sele=mysqli_query($con,"select * from individualmeangrade where class='$class' && year='$year' && term='$term' ORDER BY meangrade DESC");
 						  $counter=0;
-						  while($qr=mysql_fetch_array($sele))
+						  while($qr=mysqli_fetch_array($sele))
 						  {
 						     $counter=$counter+1;
 							 $id=$qr['studentid'];
@@ -144,10 +144,10 @@ if($want && $term && $exam && $year && $class)
 						  <td>
 						  ';
 						  //start of calculating rank at entry
-						  $ol=mysql_query("select * from studentdetails where status='1' && currentclass='$class' ORDER BY kcpemarks DESC");
-						  $wote=mysql_num_rows($ol);
+						  $ol=mysqli_query($con,"select * from studentdetails where status='1' && currentclass='$class' ORDER BY kcpemarks DESC");
+						  $wote=mysqli_num_rows($ol);
 						  $hesabu=0;
-						  while($lo=mysql_fetch_array($ol))
+						  while($lo=mysqli_fetch_array($ol))
 						  {
 						     $hesabu=$hesabu+1;
 						     $idd=$lo['admissionnumber'];
@@ -193,9 +193,9 @@ if($want && $term && $exam && $year && $class)
 						  <td>
 						  ';
 						  //start of calculating mean grade
-					             $gradi=mysql_query("select * from meangradegrading");
-								 $nu=mysql_num_rows($gradi);
-					             while($systim=mysql_fetch_array($gradi))
+					             $gradi=mysqli_query($con,"select * from meangradegrading");
+								 $nu=mysqli_num_rows($gradi);
+					             while($systim=mysqli_fetch_array($gradi))
 					             {
 					             $between=$systim['between'];
 						         $grade=$systim['grade'];
@@ -207,8 +207,8 @@ if($want && $term && $exam && $year && $class)
 						            $gradit=$grade;
 						         }
 					             }
-					             $squi=mysql_query("select * from meangradegrading where grade='$gradit'");
-					             while($rel=mysql_fetch_array($squi))
+					             $squi=mysqli_query($con,"select * from meangradegrading where grade='$gradit'");
+					             while($rel=mysqli_fetch_array($squi))
 					             {
 						             $teachercomments=$rel['classteacherremarks'];
 									 $principlecomments=$rel['principleremarks'];
@@ -234,8 +234,8 @@ if($want && $term && $exam && $year && $class)
 						  //end
 						  
 						  //start of dumping students subject perfomance
-						  $dumpy=mysql_query("select * from studentgrades where studentid='$studentidreal'  && term='$term' && year='$year' && class='$class'");
-						  $noin=mysql_num_rows($dumpy);
+						  $dumpy=mysqli_query($con,"select * from studentgrades where studentid='$studentidreal'  && term='$term' && year='$year' && class='$class'");
+						  $noin=mysqli_num_rows($dumpy);
 						  if($noin==0)
 						  {
 						      echo"<h3><font color='red'>Student grades unavailable</font></h3>";
@@ -253,7 +253,7 @@ if($want && $term && $exam && $year && $class)
 							<th>TEACHER REMARKS</th>
 							</tr>
 							';
-							while($datal=mysql_fetch_array($dumpy))
+							while($datal=mysqli_fetch_array($dumpy))
 						     {
 							     $percentagemarks=round($datal['percentagemarks'],"1");
 								 echo'
@@ -275,11 +275,11 @@ if($want && $term && $exam && $year && $class)
 						  <canvas id="<?php echo $loop."canvas"; ?>" width="900" height="300" onload="window.print()"></canvas>
 						  <?php
 						  //form one term one
-	                      $ck=mysql_query("select * from individualmeangrade where class='1' && term='one' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+	                      $ck=mysqli_query($con,"select * from individualmeangrade where class='1' && term='one' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f1t1=$nayo;
@@ -291,11 +291,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form one term one
 						  
 						  //form one term two
-						  $ck=mysql_query("select * from individualmeangrade where class='1' && term='two' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='1' && term='two' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f1t2=$nayo;
@@ -307,11 +307,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form one term two
 						  
 						  //form one term three
-						  $ck=mysql_query("select * from individualmeangrade where class='1' && term='three' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='1' && term='three' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f1t3=$nayo;
@@ -323,11 +323,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form one term three
 						  
 						  //form two term one
-						  $ck=mysql_query("select * from individualmeangrade where class='2' && term='one' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='2' && term='one' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f2t1=$nayo;
@@ -339,11 +339,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form two term one
 						  
 						  //form two term two
-						  $ck=mysql_query("select * from individualmeangrade where class='2' && term='two' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='2' && term='two' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f2t2=$nayo;
@@ -355,11 +355,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form two term two
 						  
 						  //form two term three
-						  $ck=mysql_query("select * from individualmeangrade where class='2' && term='three' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='2' && term='three' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f2t3=$nayo;
@@ -371,11 +371,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form two term four
 						  
 						  //form three term one
-						  $ck=mysql_query("select * from individualmeangrade where class='3' && term='one' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='3' && term='one' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f3t1=$nayo;
@@ -387,11 +387,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form three term one
 						  
 						  //form three term two
-						  $ck=mysql_query("select * from individualmeangrade where class='3' && term='two' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='3' && term='two' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f3t2=$nayo;
@@ -403,11 +403,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form three term two
 						  
 						  //form three term three
-						  $ck=mysql_query("select * from individualmeangrade where class='3' && term='three' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='3' && term='three' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f3t3=$nayo;
@@ -419,11 +419,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form three term three
 						  
 						  //form four term one
-						  $ck=mysql_query("select * from individualmeangrade where class='4' && term='one' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='4' && term='one' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f4t1=$nayo;
@@ -435,11 +435,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form four term one
 						  
 						  //form four term two
-						  $ck=mysql_query("select * from individualmeangrade where class='4' && term='two' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='4' && term='two' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f4t2=$nayo;
@@ -451,11 +451,11 @@ if($want && $term && $exam && $year && $class)
 						  //end form four term two
 						  
 						  //form four term three
-						  $ck=mysql_query("select * from individualmeangrade where class='4' && term='three' && studentid='$studentidreal'");
-						  $ngapi=mysql_num_rows($ck);
+						  $ck=mysqli_query($con,"select * from individualmeangrade where class='4' && term='three' && studentid='$studentidreal'");
+						  $ngapi=mysqli_num_rows($ck);
 						  if($ngapi!=0)
 						  {
-						  $kc=mysql_fetch_array($ck);
+						  $kc=mysqli_fetch_array($ck);
 						  $nayo=$kc['meangrade'];
 						  $nayo=round($nayo,1);
 						  $f4t3=$nayo;
@@ -508,8 +508,8 @@ if($want && $term && $exam && $year && $class)
 								 <br/><br/>
 								 <p style="float:left;width:40%;">
 								 ';
-								 $chq=mysql_query("select * from currentterm");
-								 $q=mysql_fetch_array($chq);
+								 $chq=mysqli_query($con,"select * from currentterm");
+								 $q=mysqli_fetch_array($chq);
 								 $currentopening=$q['openingdate'];
 								 $currentclosing=$q['closingdate'];
 								 echo'

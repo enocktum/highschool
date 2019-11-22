@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -108,8 +108,8 @@ if(!isset($_SESSION['studentregistrationlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -174,8 +174,8 @@ if(!isset($_SESSION['studentregistrationlogin']))
 		   error_reporting(E_ERROR);
 		   include("connection.php");
 			//start term info
-			$zerry=mysql_query("select * from currentterm");
-			$way=mysql_fetch_array($zerry);
+			$zerry=mysqli_query($con,"select * from currentterm");
+			$way=mysqli_fetch_array($zerry);
 			$term=$way['term'];
 			//end term info
 		   $firstname=$_POST['firstname'];
@@ -204,8 +204,8 @@ if(!isset($_SESSION['studentregistrationlogin']))
 			$use=preg_match($rejex,$admissionnumber);
 			$pass=preg_match($rejex,$password);
 			//adding fees for new student
-			$fees=mysql_query("select * from schoolinfo where termit='$term' && boardingstatus='$boardingstatus'");
-			$dip=mysql_fetch_array($fees);
+			$fees=mysqli_query($con,"select * from schoolinfo where termit='$term' && boardingstatus='$boardingstatus'");
+			$dip=mysqli_fetch_array($fees);
 			$fee=$dip['feesamount'];
 			$date=date("Y-m-d");
 			//end of adding fees for new student
@@ -214,19 +214,19 @@ if(!isset($_SESSION['studentregistrationlogin']))
 			if(!$use && !$pass)
 			{
 			//start of insertion
-			$jipi=mysql_query("select * from studentdetails where admissionnumber='$admissionnumber'");
-			$jip=mysql_num_rows($jipi);
+			$jipi=mysqli_query($con,"select * from studentdetails where admissionnumber='$admissionnumber'");
+			$jip=mysqli_num_rows($jipi);
 			if($jip==0)
 			{
-		   $insert=mysql_query("insert into studentdetails (firstname,middlename,lastname,birthday,province,nationality,gender,primaryname,kcpemarks,primarypostaladdress,kcpeyear,parentname,parentphonenumber,parentpostaladdress,admissionnumber,password,admissiondate,stream,dormitory,status,currentclass,boardingstatus) values ('$firstname','$middlename','$lastname','$birthday','$province','$nationality','$gender','$primaryname','$kcpemarks','$primarypostaladdress','$kcpeyear','$parentname','$parentphonenumber','$parentpostaladdress','$admissionnumber','$password','$admissiondate','$stream','$dormitory','1','$currentclass','$boardingstatus')");
+		   $insert=mysqli_query($con,"insert into studentdetails (firstname,middlename,lastname,birthday,province,nationality,gender,primaryname,kcpemarks,primarypostaladdress,kcpeyear,parentname,parentphonenumber,parentpostaladdress,admissionnumber,password,admissiondate,stream,dormitory,status,currentclass,boardingstatus) values ('$firstname','$middlename','$lastname','$birthday','$province','$nationality','$gender','$primaryname','$kcpemarks','$primarypostaladdress','$kcpeyear','$parentname','$parentphonenumber','$parentpostaladdress','$admissionnumber','$password','$admissiondate','$stream','$dormitory','1','$currentclass','$boardingstatus')");
 		   if($insert)
 		   {
 		       echo"Student has been successfully registered in student details ";
-			   $insert2=mysql_query("insert into currentcharges (studentid,balance,status,term,date) values ('$admissionnumber','$fee','1','$term','$date')");
+			   $insert2=mysqli_query($con,"insert into currentcharges (studentid,balance,status,term,date) values ('$admissionnumber','$fee','1','$term','$date')");
 			   if($insert2)
 			   {
 			   echo",student current charges ";
-			   $insert3=mysql_query("insert into financestatement (feespaid,studentid,studentstatus,feespayable,datedeposited,term) values ('0','$admissionnumber','Unpaid','$fee','$date','$term')");
+			   $insert3=mysqli_query($con,"insert into financestatement (feespaid,studentid,studentstatus,feespayable,datedeposited,term) values ('0','$admissionnumber','Unpaid','$fee','$date','$term')");
 			   if($insert3)
 			   {
 			     echo"and student finance statement.";

@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -126,8 +126,8 @@ xmlhttp.send();
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -198,14 +198,14 @@ xmlhttp.send();
 			if($studentid && $amountpaid && $datepaid && $paymenttype)
 			{
 			//start of calculating fees payable and term
-			$serry=mysql_query("select * from currentcharges where studentid='$studentid' and status='1'");
-			$no=mysql_num_rows($serry);
+			$serry=mysqli_query($con,"select * from currentcharges where studentid='$studentid' and status='1'");
+			$no=mysqli_num_rows($serry);
 			if($no>0)
 			{
-			$erry=mysql_fetch_array($serry);
+			$erry=mysqli_fetch_array($serry);
 			//getting term
-			$jung=mysql_query("select * from currentterm");
-			$nguj=mysql_fetch_array($jung);
+			$jung=mysqli_query($con,"select * from currentterm");
+			$nguj=mysqli_fetch_array($jung);
 			$term=$nguj['term'];
 			//end of term
 			$balance=$erry['balance'];
@@ -259,25 +259,25 @@ xmlhttp.send();
 			//end of checking student status
 			
 			//start setting balance == fees payable in currentcharges
-			$shery=mysql_query("select * from currentcharges where studentid='$studentid' && status='1'");
-			$pery=mysql_num_rows($shery);
+			$shery=mysqli_query($con,"select * from currentcharges where studentid='$studentid' && status='1'");
+			$pery=mysqli_num_rows($shery);
 			if($pery>0)
 			{
-			$terry=mysql_query("update currentcharges set balance='$feespayable' where studentid='$studentid' && status='1'");
+			$terry=mysqli_query($con,"update currentcharges set balance='$feespayable' where studentid='$studentid' && status='1'");
 			if($terry)
 			{
 			if($studentid && $amountpaid)
 			{
 			//START INSERTING DATA TO DATABASE
-			$query=mysql_query("insert into financestatement (feespaid,term,studentid,datedeposited,studentstatus,feespayable) values ('$amountpaid','$term','$studentid','$datepaid','$studentstatus','$feespayable')");
+			$query=mysqli_query($con,"insert into financestatement (feespaid,term,studentid,datedeposited,studentstatus,feespayable) values ('$amountpaid','$term','$studentid','$datepaid','$studentstatus','$feespayable')");
 			if($query)
 			{
 				//start of updating total amount
-				$que=mysql_query("select * from total");
-				$datsa=mysql_fetch_array($que);
+				$que=mysqli_query($con,"select * from total");
+				$datsa=mysqli_fetch_array($que);
 				$justamount=$datsa['amount'];
 				$newtotalamount=$amountpaid + $justamount;
-				$updatetotal=mysql_query("update total set amount='$newtotalamount'");
+				$updatetotal=mysqli_query($con,"update total set amount='$newtotalamount'");
 				if($updatetotal)
 				{
 					echo"financial statement for <font color='green'>".$studentid."</font> has been successfully added and updated<br/><a href='industryaddfees'>add next</a>&nbsp;&nbsp;<a href='industryhome'>Am Done</a><br/><br/>";
@@ -286,12 +286,12 @@ xmlhttp.send();
 					//start of new code
             //start of looping voteheads with while loop
 			$remaining=$amountpaid;
-			$board=mysql_query("select * from studentdetails where admissionnumber='$studentid'");
-			$ing=mysql_fetch_array($board);
+			$board=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid'");
+			$ing=mysqli_fetch_array($board);
 			$boarding=$ing['boardingstatus'];
-			$vote=mysql_query("select * from voteheads where termit='$term' && boardingstatus='$boarding'");
+			$vote=mysqli_query($con,"select * from voteheads where termit='$term' && boardingstatus='$boarding'");
 			$counter=0;
-	        while($head = mysql_fetch_array($vote))
+	        while($head = mysqli_fetch_array($vote))
 	       {
 			   $votehead=$head['name'];
 			   $voteamount=$head['amount'];
@@ -330,7 +330,7 @@ xmlhttp.send();
 			echo"<hr/>";
 			if($votee != "")
 			{
-			$ingiza=mysql_query("insert into cashbook (date,origin,recieptno,cash,bank,total,term,votehead) values ('$datepaid','$from','$recieptno','$cash','$bank','$total','$term','$votee')");
+			$ingiza=mysqli_query($con,"insert into cashbook (date,origin,recieptno,cash,bank,total,term,votehead) values ('$datepaid','$from','$recieptno','$cash','$bank','$total','$term','$votee')");
 			if($ingiza)
 			{
 				echo"The following voteheads have been updated:<br/> <u><font color='#009933'>".$votee."</font></u><br/>";

@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("../connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("../connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -172,20 +172,20 @@ $year=$_POST['year'];
 $term=$_POST['term'];
 if(isset($exam) && isset($class) && isset($year) && isset($term))
 {
-$allstudents=mysql_query("select * from studentdetails where currentclass='$class' && status='1'");
-$noofstudents=mysql_num_rows($allstudents);
+$allstudents=mysqli_query($con,"select * from studentdetails where currentclass='$class' && status='1'");
+$noofstudents=mysqli_num_rows($allstudents);
      //checking if there are students in that specified class
      if($noofstudents != 0)
      {
 	     //start checking if all students have done exams
 		 $counter=0;
 		 //start of getting active students examinations records
-         $allexamined=mysql_query("select * from individualmeangrade where class='$class' && year='$year' && term='$term' ");
-		 while($walal=mysql_fetch_array($allexamined))
+         $allexamined=mysqli_query($con,"select * from individualmeangrade where class='$class' && year='$year' && term='$term' ");
+		 while($walal=mysqli_fetch_array($allexamined))
 		 {
 		     $kita=$walal['studentid'];
-			 $ona=mysql_query("select * from studentdetails where currentclass='$class' && status='1'");
-			 while($nao=mysql_fetch_array($ona))
+			 $ona=mysqli_query($con,"select * from studentdetails where currentclass='$class' && status='1'");
+			 while($nao=mysqli_fetch_array($ona))
 			 {
 			     $kitabuli=$nao['admissionnumber'];
 				 if($kitabuli == $kita)
@@ -215,7 +215,7 @@ $noofstudents=mysql_num_rows($allstudents);
 			 <th>STUDENT ID</th>
 			 </tr>
 			 ";
-			 while($tata=mysql_fetch_array($allstudents))
+			 while($tata=mysqli_fetch_array($allstudents))
 			 {
 			    echo"
 				<tr>
@@ -258,11 +258,11 @@ $noofstudents=mysql_num_rows($allstudents);
 			 <th>EXAM DONE</th>
 			 </tr>
 			 ";
-			 $n=mysql_query("select * from individualmeangrade where class='$class' && year='$year' && term='$term'");
-			 while($w=mysql_fetch_array($n))
+			 $n=mysqli_query($con,"select * from individualmeangrade where class='$class' && year='$year' && term='$term'");
+			 while($w=mysqli_fetch_array($n))
 			 {
 			     $id=$w['studentid'];
-				 while($h=mysql_fetch_array($allstudents))
+				 while($h=mysqli_fetch_array($allstudents))
 				 {
 				     $k=$h['admissionnumber'];
 					 $q=$h['firstname']." ".$h['middlename']." ".$h['lastname'];

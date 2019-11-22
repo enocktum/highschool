@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -108,8 +108,8 @@ if(!isset($_SESSION['studentregistrationlogin']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -177,7 +177,7 @@ if(!isset($_SESSION['studentregistrationlogin']))
 			{
 			if($status=="1")
 			{
-				$updatestudentdetails=mysql_query("update studentdetails set status='2' where admissionnumber='$studentid'");
+				$updatestudentdetails=mysqli_query($con,"update studentdetails set status='2' where admissionnumber='$studentid'");
 				if($updatestudentdetails)
 				{
 					header("location:viewstudent");
@@ -189,7 +189,7 @@ if(!isset($_SESSION['studentregistrationlogin']))
 			}
 			else
 			{
-				$updatestudentdetails=mysql_query("update studentdetails set status='1' where admissionnumber='$studentid'");
+				$updatestudentdetails=mysqli_query($con,"update studentdetails set status='1' where admissionnumber='$studentid'");
 				if($updatestudentdetails)
 				{
 					header("location:viewstudent");

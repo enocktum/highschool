@@ -4,8 +4,8 @@ ob_start()
 <?php
 session_start();
 include("connection.php");
-$query=mysql_query("select * from footer");
-while($data=mysql_fetch_array($query))
+$query=mysqli_query($con,"select * from footer");
+while($data=mysqli_fetch_array($query))
 {
 $schoolname=$data['schoolname'];
 $copyright=$data['copyright'];
@@ -101,8 +101,8 @@ if(!isset($_SESSION['examsetup']))
 		include("connection.php");
 		error_reporting(E_ERROR);
 		$date=date("Y-m-d");
-		$heri=mysql_query("select * from currentterm");
-		$ri=mysql_fetch_array($heri);
+		$heri=mysqli_query($con,"select * from currentterm");
+		$ri=mysqli_fetch_array($heri);
 		$term=$ri['term'];
 		if($term)
 		{
@@ -171,11 +171,11 @@ if(!isset($_SESSION['examsetup']))
 			$nextclass=$_POST['class'];
 			if($studentid && $nextclass)
 			{
-			     $qu=mysql_query("select * from studentdetails where admissionnumber='$studentid' && status='1'");
-				 $no=mysql_num_rows($qu);
+			     $qu=mysqli_query($con,"select * from studentdetails where admissionnumber='$studentid' && status='1'");
+				 $no=mysqli_num_rows($qu);
 				 if($no==1)
 				 {
-				     $ry=mysql_fetch_array($qu);
+				     $ry=mysqli_fetch_array($qu);
 					 $currentclass=$ry['currentclass'];
 					 if($currentclass > $nextclass)
 					 {
